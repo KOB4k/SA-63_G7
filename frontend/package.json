@@ -42,5 +42,8 @@
     "*.{json,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "react-bootstrap": "^1.3.0"
   }
 }

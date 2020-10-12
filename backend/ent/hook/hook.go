@@ -9,15 +9,54 @@ import (
 	"github.com/KOB4k/app/ent"
 )
 
-// The UserFunc type is an adapter to allow the use of ordinary
-// function as User mutator.
-type UserFunc func(context.Context, *ent.UserMutation) (ent.Value, error)
+// The DiseaseFunc type is an adapter to allow the use of ordinary
+// function as Disease mutator.
+type DiseaseFunc func(context.Context, *ent.DiseaseMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f UserFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.UserMutation)
+func (f DiseaseFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.DiseaseMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UserMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DiseaseMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The DiseaseTypeFunc type is an adapter to allow the use of ordinary
+// function as DiseaseType mutator.
+type DiseaseTypeFunc func(context.Context, *ent.DiseaseTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f DiseaseTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.DiseaseTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DiseaseTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The EmployeeFunc type is an adapter to allow the use of ordinary
+// function as Employee mutator.
+type EmployeeFunc func(context.Context, *ent.EmployeeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f EmployeeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.EmployeeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.EmployeeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The SeverityFunc type is an adapter to allow the use of ordinary
+// function as Severity mutator.
+type SeverityFunc func(context.Context, *ent.SeverityMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SeverityFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.SeverityMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SeverityMutation", m)
 	}
 	return f(ctx, mv)
 }

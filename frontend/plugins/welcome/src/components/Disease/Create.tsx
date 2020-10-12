@@ -17,6 +17,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -48,7 +49,7 @@ const diseaseState = {
   severity_id: 1,
   symptom: '',
   contagion: '',
-  agency_id: [1, 2]
+  type_id: [1, 2]
 };
 
 
@@ -80,17 +81,17 @@ const severityState = [
 ];
 
 
-const typeState = [
+const diseaseTypeState = [
   {
-    severity_id: 1,
+    diseaseType_id: 1,
     name: 'โรคติดต่อ'
   },
   {
-    severity_id: 2,
+    diseaseType_id: 2,
     name: 'โรคติดต่อต้องแจ้งความ'
   },
   {
-    severity_id: 3,
+    diseaseType_id: 3,
     name: 'โรคติดต่ออันตราย'
   }
 ];
@@ -106,7 +107,7 @@ export default function Create() {
   const [disease, setDisease] = useState(diseaseState);
   const [employee, setEmployee] = useState(employeeState);
   const [severity, setSeverity] = useState(severityState);
-  const [type, setType] = useState(typeState);
+  const [DiseaseType, setDiseaseType] = useState(diseaseTypeState);
 
   const handleInputDiseaseChange = (event: any) => {
     const { id, value } = event.target;
@@ -129,10 +130,10 @@ export default function Create() {
     const timer = setTimeout(() => {
       setStatus(false);
     }, 1000);
-  };
+  };;s
 
   return (
-    <Page theme={pageTheme.home}>
+    <Page theme={pageTheme.service}>
       <Header 
         title={`ระบบจัดการโรคติดต่อ`} 
         subtitle="Some quick intro and links."
@@ -217,7 +218,7 @@ export default function Create() {
               <Autocomplete
                 style={{ marginTop: 20 }}
                 id="combo-box-demo"
-                options={type}
+                options={DiseaseType}
                 getOptionLabel={(option) => option.name}
                 renderInput={(params) => <TextField {...params} label="ประเภทโรคติดต่อ" variant="outlined" />}
               />
@@ -247,7 +248,6 @@ export default function Create() {
               </Button>
               <Button
                 variant="contained"
-                color="blueGrey"
                 size="small"
                 component={RouterLink}
                 to="/"

@@ -8,24 +8,92 @@ import (
 )
 
 var (
-	// UsersColumns holds the columns for the "users" table.
-	UsersColumns = []*schema.Column{
+	// DiseasesColumns holds the columns for the "diseases" table.
+	DiseasesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "age", Type: field.TypeInt},
+		{Name: "name", Type: field.TypeString},
+		{Name: "syptom", Type: field.TypeString},
+		{Name: "contagion", Type: field.TypeString},
+		{Name: "disease_type_disease", Type: field.TypeInt, Nullable: true},
+		{Name: "employee_disease", Type: field.TypeInt, Nullable: true},
+		{Name: "severity_disease", Type: field.TypeInt, Nullable: true},
+	}
+	// DiseasesTable holds the schema information for the "diseases" table.
+	DiseasesTable = &schema.Table{
+		Name:       "diseases",
+		Columns:    DiseasesColumns,
+		PrimaryKey: []*schema.Column{DiseasesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:  "diseases_disease_types_disease",
+				Columns: []*schema.Column{DiseasesColumns[4]},
+
+				RefColumns: []*schema.Column{DiseaseTypesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:  "diseases_employees_disease",
+				Columns: []*schema.Column{DiseasesColumns[5]},
+
+				RefColumns: []*schema.Column{EmployeesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:  "diseases_severities_disease",
+				Columns: []*schema.Column{DiseasesColumns[6]},
+
+				RefColumns: []*schema.Column{SeveritiesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// DiseaseTypesColumns holds the columns for the "disease_types" table.
+	DiseaseTypesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "name", Type: field.TypeString},
 	}
-	// UsersTable holds the schema information for the "users" table.
-	UsersTable = &schema.Table{
-		Name:        "users",
-		Columns:     UsersColumns,
-		PrimaryKey:  []*schema.Column{UsersColumns[0]},
+	// DiseaseTypesTable holds the schema information for the "disease_types" table.
+	DiseaseTypesTable = &schema.Table{
+		Name:        "disease_types",
+		Columns:     DiseaseTypesColumns,
+		PrimaryKey:  []*schema.Column{DiseaseTypesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{},
+	}
+	// EmployeesColumns holds the columns for the "employees" table.
+	EmployeesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "name", Type: field.TypeString},
+	}
+	// EmployeesTable holds the schema information for the "employees" table.
+	EmployeesTable = &schema.Table{
+		Name:        "employees",
+		Columns:     EmployeesColumns,
+		PrimaryKey:  []*schema.Column{EmployeesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{},
+	}
+	// SeveritiesColumns holds the columns for the "severities" table.
+	SeveritiesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "name", Type: field.TypeString},
+	}
+	// SeveritiesTable holds the schema information for the "severities" table.
+	SeveritiesTable = &schema.Table{
+		Name:        "severities",
+		Columns:     SeveritiesColumns,
+		PrimaryKey:  []*schema.Column{SeveritiesColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		UsersTable,
+		DiseasesTable,
+		DiseaseTypesTable,
+		EmployeesTable,
+		SeveritiesTable,
 	}
 )
 
 func init() {
+	DiseasesTable.ForeignKeys[0].RefTable = DiseaseTypesTable
+	DiseasesTable.ForeignKeys[1].RefTable = EmployeesTable
+	DiseasesTable.ForeignKeys[2].RefTable = SeveritiesTable
 }
