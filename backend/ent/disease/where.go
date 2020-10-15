@@ -91,42 +91,42 @@ func IDLTE(id int) predicate.Disease {
 	})
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+// Name applies equality check predicate on the "Name" field. It's identical to NameEQ.
 func Name(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// Syptom applies equality check predicate on the "syptom" field. It's identical to SyptomEQ.
-func Syptom(v string) predicate.Disease {
+// Symptom applies equality check predicate on the "Symptom" field. It's identical to SymptomEQ.
+func Symptom(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSyptom), v))
+		s.Where(sql.EQ(s.C(FieldSymptom), v))
 	})
 }
 
-// Contagion applies equality check predicate on the "contagion" field. It's identical to ContagionEQ.
+// Contagion applies equality check predicate on the "Contagion" field. It's identical to ContagionEQ.
 func Contagion(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldContagion), v))
 	})
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
+// NameEQ applies the EQ predicate on the "Name" field.
 func NameEQ(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
+// NameNEQ applies the NEQ predicate on the "Name" field.
 func NameNEQ(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// NameIn applies the In predicate on the "name" field.
+// NameIn applies the In predicate on the "Name" field.
 func NameIn(vs ...string) predicate.Disease {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -143,7 +143,7 @@ func NameIn(vs ...string) predicate.Disease {
 	})
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
+// NameNotIn applies the NotIn predicate on the "Name" field.
 func NameNotIn(vs ...string) predicate.Disease {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -160,85 +160,85 @@ func NameNotIn(vs ...string) predicate.Disease {
 	})
 }
 
-// NameGT applies the GT predicate on the "name" field.
+// NameGT applies the GT predicate on the "Name" field.
 func NameGT(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
+// NameGTE applies the GTE predicate on the "Name" field.
 func NameGTE(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// NameLT applies the LT predicate on the "name" field.
+// NameLT applies the LT predicate on the "Name" field.
 func NameLT(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
+// NameLTE applies the LTE predicate on the "Name" field.
 func NameLTE(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// NameContains applies the Contains predicate on the "name" field.
+// NameContains applies the Contains predicate on the "Name" field.
 func NameContains(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+// NameHasPrefix applies the HasPrefix predicate on the "Name" field.
 func NameHasPrefix(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+// NameHasSuffix applies the HasSuffix predicate on the "Name" field.
 func NameHasSuffix(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// NameEqualFold applies the EqualFold predicate on the "name" field.
+// NameEqualFold applies the EqualFold predicate on the "Name" field.
 func NameEqualFold(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
+// NameContainsFold applies the ContainsFold predicate on the "Name" field.
 func NameContainsFold(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 
-// SyptomEQ applies the EQ predicate on the "syptom" field.
-func SyptomEQ(v string) predicate.Disease {
+// SymptomEQ applies the EQ predicate on the "Symptom" field.
+func SymptomEQ(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSyptom), v))
+		s.Where(sql.EQ(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomNEQ applies the NEQ predicate on the "syptom" field.
-func SyptomNEQ(v string) predicate.Disease {
+// SymptomNEQ applies the NEQ predicate on the "Symptom" field.
+func SymptomNEQ(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldSyptom), v))
+		s.Where(sql.NEQ(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomIn applies the In predicate on the "syptom" field.
-func SyptomIn(vs ...string) predicate.Disease {
+// SymptomIn applies the In predicate on the "Symptom" field.
+func SymptomIn(vs ...string) predicate.Disease {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -250,12 +250,12 @@ func SyptomIn(vs ...string) predicate.Disease {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldSyptom), v...))
+		s.Where(sql.In(s.C(FieldSymptom), v...))
 	})
 }
 
-// SyptomNotIn applies the NotIn predicate on the "syptom" field.
-func SyptomNotIn(vs ...string) predicate.Disease {
+// SymptomNotIn applies the NotIn predicate on the "Symptom" field.
+func SymptomNotIn(vs ...string) predicate.Disease {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -267,88 +267,88 @@ func SyptomNotIn(vs ...string) predicate.Disease {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldSyptom), v...))
+		s.Where(sql.NotIn(s.C(FieldSymptom), v...))
 	})
 }
 
-// SyptomGT applies the GT predicate on the "syptom" field.
-func SyptomGT(v string) predicate.Disease {
+// SymptomGT applies the GT predicate on the "Symptom" field.
+func SymptomGT(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldSyptom), v))
+		s.Where(sql.GT(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomGTE applies the GTE predicate on the "syptom" field.
-func SyptomGTE(v string) predicate.Disease {
+// SymptomGTE applies the GTE predicate on the "Symptom" field.
+func SymptomGTE(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldSyptom), v))
+		s.Where(sql.GTE(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomLT applies the LT predicate on the "syptom" field.
-func SyptomLT(v string) predicate.Disease {
+// SymptomLT applies the LT predicate on the "Symptom" field.
+func SymptomLT(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldSyptom), v))
+		s.Where(sql.LT(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomLTE applies the LTE predicate on the "syptom" field.
-func SyptomLTE(v string) predicate.Disease {
+// SymptomLTE applies the LTE predicate on the "Symptom" field.
+func SymptomLTE(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldSyptom), v))
+		s.Where(sql.LTE(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomContains applies the Contains predicate on the "syptom" field.
-func SyptomContains(v string) predicate.Disease {
+// SymptomContains applies the Contains predicate on the "Symptom" field.
+func SymptomContains(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldSyptom), v))
+		s.Where(sql.Contains(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomHasPrefix applies the HasPrefix predicate on the "syptom" field.
-func SyptomHasPrefix(v string) predicate.Disease {
+// SymptomHasPrefix applies the HasPrefix predicate on the "Symptom" field.
+func SymptomHasPrefix(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldSyptom), v))
+		s.Where(sql.HasPrefix(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomHasSuffix applies the HasSuffix predicate on the "syptom" field.
-func SyptomHasSuffix(v string) predicate.Disease {
+// SymptomHasSuffix applies the HasSuffix predicate on the "Symptom" field.
+func SymptomHasSuffix(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldSyptom), v))
+		s.Where(sql.HasSuffix(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomEqualFold applies the EqualFold predicate on the "syptom" field.
-func SyptomEqualFold(v string) predicate.Disease {
+// SymptomEqualFold applies the EqualFold predicate on the "Symptom" field.
+func SymptomEqualFold(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldSyptom), v))
+		s.Where(sql.EqualFold(s.C(FieldSymptom), v))
 	})
 }
 
-// SyptomContainsFold applies the ContainsFold predicate on the "syptom" field.
-func SyptomContainsFold(v string) predicate.Disease {
+// SymptomContainsFold applies the ContainsFold predicate on the "Symptom" field.
+func SymptomContainsFold(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldSyptom), v))
+		s.Where(sql.ContainsFold(s.C(FieldSymptom), v))
 	})
 }
 
-// ContagionEQ applies the EQ predicate on the "contagion" field.
+// ContagionEQ applies the EQ predicate on the "Contagion" field.
 func ContagionEQ(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionNEQ applies the NEQ predicate on the "contagion" field.
+// ContagionNEQ applies the NEQ predicate on the "Contagion" field.
 func ContagionNEQ(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionIn applies the In predicate on the "contagion" field.
+// ContagionIn applies the In predicate on the "Contagion" field.
 func ContagionIn(vs ...string) predicate.Disease {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -365,7 +365,7 @@ func ContagionIn(vs ...string) predicate.Disease {
 	})
 }
 
-// ContagionNotIn applies the NotIn predicate on the "contagion" field.
+// ContagionNotIn applies the NotIn predicate on the "Contagion" field.
 func ContagionNotIn(vs ...string) predicate.Disease {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -382,63 +382,63 @@ func ContagionNotIn(vs ...string) predicate.Disease {
 	})
 }
 
-// ContagionGT applies the GT predicate on the "contagion" field.
+// ContagionGT applies the GT predicate on the "Contagion" field.
 func ContagionGT(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionGTE applies the GTE predicate on the "contagion" field.
+// ContagionGTE applies the GTE predicate on the "Contagion" field.
 func ContagionGTE(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionLT applies the LT predicate on the "contagion" field.
+// ContagionLT applies the LT predicate on the "Contagion" field.
 func ContagionLT(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionLTE applies the LTE predicate on the "contagion" field.
+// ContagionLTE applies the LTE predicate on the "Contagion" field.
 func ContagionLTE(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionContains applies the Contains predicate on the "contagion" field.
+// ContagionContains applies the Contains predicate on the "Contagion" field.
 func ContagionContains(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionHasPrefix applies the HasPrefix predicate on the "contagion" field.
+// ContagionHasPrefix applies the HasPrefix predicate on the "Contagion" field.
 func ContagionHasPrefix(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionHasSuffix applies the HasSuffix predicate on the "contagion" field.
+// ContagionHasSuffix applies the HasSuffix predicate on the "Contagion" field.
 func ContagionHasSuffix(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionEqualFold applies the EqualFold predicate on the "contagion" field.
+// ContagionEqualFold applies the EqualFold predicate on the "Contagion" field.
 func ContagionEqualFold(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldContagion), v))
 	})
 }
 
-// ContagionContainsFold applies the ContainsFold predicate on the "contagion" field.
+// ContagionContainsFold applies the ContainsFold predicate on the "Contagion" field.
 func ContagionContainsFold(v string) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldContagion), v))
@@ -514,7 +514,7 @@ func HasDiseasetype() predicate.Disease {
 }
 
 // HasDiseasetypeWith applies the HasEdge predicate on the "diseasetype" edge with a given conditions (other predicates).
-func HasDiseasetypeWith(preds ...predicate.DiseaseType) predicate.Disease {
+func HasDiseasetypeWith(preds ...predicate.Diseasetype) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),

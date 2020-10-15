@@ -4,7 +4,7 @@ package diseasetype
 
 const (
 	// Label holds the string label denoting the diseasetype type in the database.
-	Label = "disease_type"
+	Label = "diseasetype"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
 	// FieldName holds the string denoting the name field in the database.
@@ -14,14 +14,14 @@ const (
 	EdgeDisease = "disease"
 
 	// Table holds the table name of the diseasetype in the database.
-	Table = "disease_types"
+	Table = "diseasetypes"
 	// DiseaseTable is the table the holds the disease relation/edge.
 	DiseaseTable = "diseases"
 	// DiseaseInverseTable is the table name for the Disease entity.
 	// It exists in this package in order to avoid circular dependency with the "disease" package.
 	DiseaseInverseTable = "diseases"
 	// DiseaseColumn is the table column denoting the disease relation/edge.
-	DiseaseColumn = "disease_type_disease"
+	DiseaseColumn = "diseasetype_disease"
 )
 
 // Columns holds all SQL columns for diseasetype fields.
@@ -29,8 +29,3 @@ var Columns = []string{
 	FieldID,
 	FieldName,
 }
-
-var (
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-)

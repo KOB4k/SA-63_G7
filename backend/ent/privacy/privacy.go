@@ -234,28 +234,28 @@ func (f DiseaseMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutatio
 	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.DiseaseMutation", m)
 }
 
-// The DiseaseTypeQueryRuleFunc type is an adapter to allow the use of ordinary
+// The DiseasetypeQueryRuleFunc type is an adapter to allow the use of ordinary
 // functions as a query rule.
-type DiseaseTypeQueryRuleFunc func(context.Context, *ent.DiseaseTypeQuery) error
+type DiseasetypeQueryRuleFunc func(context.Context, *ent.DiseasetypeQuery) error
 
 // EvalQuery return f(ctx, q).
-func (f DiseaseTypeQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
-	if q, ok := q.(*ent.DiseaseTypeQuery); ok {
+func (f DiseasetypeQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.DiseasetypeQuery); ok {
 		return f(ctx, q)
 	}
-	return Denyf("ent/privacy: unexpected query type %T, expect *ent.DiseaseTypeQuery", q)
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.DiseasetypeQuery", q)
 }
 
-// The DiseaseTypeMutationRuleFunc type is an adapter to allow the use of ordinary
+// The DiseasetypeMutationRuleFunc type is an adapter to allow the use of ordinary
 // functions as a mutation rule.
-type DiseaseTypeMutationRuleFunc func(context.Context, *ent.DiseaseTypeMutation) error
+type DiseasetypeMutationRuleFunc func(context.Context, *ent.DiseasetypeMutation) error
 
 // EvalMutation calls f(ctx, m).
-func (f DiseaseTypeMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
-	if m, ok := m.(*ent.DiseaseTypeMutation); ok {
+func (f DiseasetypeMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.DiseasetypeMutation); ok {
 		return f(ctx, m)
 	}
-	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.DiseaseTypeMutation", m)
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.DiseasetypeMutation", m)
 }
 
 // The EmployeeQueryRuleFunc type is an adapter to allow the use of ordinary

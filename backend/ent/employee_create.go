@@ -20,9 +20,9 @@ type EmployeeCreate struct {
 	hooks    []Hook
 }
 
-// SetName sets the name field.
-func (ec *EmployeeCreate) SetName(s string) *EmployeeCreate {
-	ec.mutation.SetName(s)
+// SetUserID sets the User_id field.
+func (ec *EmployeeCreate) SetUserID(s string) *EmployeeCreate {
+	ec.mutation.SetUserID(s)
 	return ec
 }
 
@@ -48,13 +48,8 @@ func (ec *EmployeeCreate) Mutation() *EmployeeMutation {
 
 // Save creates the Employee in the database.
 func (ec *EmployeeCreate) Save(ctx context.Context) (*Employee, error) {
-	if _, ok := ec.mutation.Name(); !ok {
-		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
-	}
-	if v, ok := ec.mutation.Name(); ok {
-		if err := employee.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
+	if _, ok := ec.mutation.UserID(); !ok {
+		return nil, &ValidationError{Name: "User_id", err: errors.New("ent: missing required field \"User_id\"")}
 	}
 	var (
 		err  error
@@ -116,13 +111,13 @@ func (ec *EmployeeCreate) createSpec() (*Employee, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := ec.mutation.Name(); ok {
+	if value, ok := ec.mutation.UserID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: employee.FieldName,
+			Column: employee.FieldUserID,
 		})
-		e.Name = value
+		e.UserID = value
 	}
 	if nodes := ec.mutation.DiseaseIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

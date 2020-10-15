@@ -7,6 +7,7 @@ import (
     "github.com/facebookincubator/ent/schema/edge"
 )
 
+// Severity schema
 type Severity struct {
     ent.Schema
 }
@@ -14,7 +15,7 @@ type Severity struct {
 //Fields of the Severity
 func (Severity) Fields() []ent.Field {
     return []ent.Field{
-        field.String("name").NotEmpty(),
+        field.String("Name"),
 
     }
 }
@@ -23,6 +24,7 @@ func (Severity) Fields() []ent.Field {
 func (Severity) Edges() []ent.Edge {
     return []ent.Edge{
         edge.To("disease", Disease.Type),
+
     }
 }
 

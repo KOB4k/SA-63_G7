@@ -7,8 +7,8 @@ const (
 	Label = "employee"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
+	// FieldUserID holds the string denoting the user_id field in the database.
+	FieldUserID = "user_id"
 
 	// EdgeDisease holds the string denoting the disease edge name in mutations.
 	EdgeDisease = "disease"
@@ -27,10 +27,5 @@ const (
 // Columns holds all SQL columns for employee fields.
 var Columns = []string{
 	FieldID,
-	FieldName,
+	FieldUserID,
 }
-
-var (
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-)

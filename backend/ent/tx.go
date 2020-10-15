@@ -14,8 +14,8 @@ type Tx struct {
 	config
 	// Disease is the client for interacting with the Disease builders.
 	Disease *DiseaseClient
-	// DiseaseType is the client for interacting with the DiseaseType builders.
-	DiseaseType *DiseaseTypeClient
+	// Diseasetype is the client for interacting with the Diseasetype builders.
+	Diseasetype *DiseasetypeClient
 	// Employee is the client for interacting with the Employee builders.
 	Employee *EmployeeClient
 	// Severity is the client for interacting with the Severity builders.
@@ -156,7 +156,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.Disease = NewDiseaseClient(tx.config)
-	tx.DiseaseType = NewDiseaseTypeClient(tx.config)
+	tx.Diseasetype = NewDiseasetypeClient(tx.config)
 	tx.Employee = NewEmployeeClient(tx.config)
 	tx.Severity = NewSeverityClient(tx.config)
 }

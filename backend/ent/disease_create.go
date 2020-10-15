@@ -22,19 +22,19 @@ type DiseaseCreate struct {
 	hooks    []Hook
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (dc *DiseaseCreate) SetName(s string) *DiseaseCreate {
 	dc.mutation.SetName(s)
 	return dc
 }
 
-// SetSyptom sets the syptom field.
-func (dc *DiseaseCreate) SetSyptom(s string) *DiseaseCreate {
-	dc.mutation.SetSyptom(s)
+// SetSymptom sets the Symptom field.
+func (dc *DiseaseCreate) SetSymptom(s string) *DiseaseCreate {
+	dc.mutation.SetSymptom(s)
 	return dc
 }
 
-// SetContagion sets the contagion field.
+// SetContagion sets the Contagion field.
 func (dc *DiseaseCreate) SetContagion(s string) *DiseaseCreate {
 	dc.mutation.SetContagion(s)
 	return dc
@@ -78,13 +78,13 @@ func (dc *DiseaseCreate) SetServerity(s *Severity) *DiseaseCreate {
 	return dc.SetServerityID(s.ID)
 }
 
-// SetDiseasetypeID sets the diseasetype edge to DiseaseType by id.
+// SetDiseasetypeID sets the diseasetype edge to Diseasetype by id.
 func (dc *DiseaseCreate) SetDiseasetypeID(id int) *DiseaseCreate {
 	dc.mutation.SetDiseasetypeID(id)
 	return dc
 }
 
-// SetNillableDiseasetypeID sets the diseasetype edge to DiseaseType by id if the given value is not nil.
+// SetNillableDiseasetypeID sets the diseasetype edge to Diseasetype by id if the given value is not nil.
 func (dc *DiseaseCreate) SetNillableDiseasetypeID(id *int) *DiseaseCreate {
 	if id != nil {
 		dc = dc.SetDiseasetypeID(*id)
@@ -92,8 +92,8 @@ func (dc *DiseaseCreate) SetNillableDiseasetypeID(id *int) *DiseaseCreate {
 	return dc
 }
 
-// SetDiseasetype sets the diseasetype edge to DiseaseType.
-func (dc *DiseaseCreate) SetDiseasetype(d *DiseaseType) *DiseaseCreate {
+// SetDiseasetype sets the diseasetype edge to Diseasetype.
+func (dc *DiseaseCreate) SetDiseasetype(d *Diseasetype) *DiseaseCreate {
 	return dc.SetDiseasetypeID(d.ID)
 }
 
@@ -105,28 +105,13 @@ func (dc *DiseaseCreate) Mutation() *DiseaseMutation {
 // Save creates the Disease in the database.
 func (dc *DiseaseCreate) Save(ctx context.Context) (*Disease, error) {
 	if _, ok := dc.mutation.Name(); !ok {
-		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
+		return nil, &ValidationError{Name: "Name", err: errors.New("ent: missing required field \"Name\"")}
 	}
-	if v, ok := dc.mutation.Name(); ok {
-		if err := disease.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
-	}
-	if _, ok := dc.mutation.Syptom(); !ok {
-		return nil, &ValidationError{Name: "syptom", err: errors.New("ent: missing required field \"syptom\"")}
-	}
-	if v, ok := dc.mutation.Syptom(); ok {
-		if err := disease.SyptomValidator(v); err != nil {
-			return nil, &ValidationError{Name: "syptom", err: fmt.Errorf("ent: validator failed for field \"syptom\": %w", err)}
-		}
+	if _, ok := dc.mutation.Symptom(); !ok {
+		return nil, &ValidationError{Name: "Symptom", err: errors.New("ent: missing required field \"Symptom\"")}
 	}
 	if _, ok := dc.mutation.Contagion(); !ok {
-		return nil, &ValidationError{Name: "contagion", err: errors.New("ent: missing required field \"contagion\"")}
-	}
-	if v, ok := dc.mutation.Contagion(); ok {
-		if err := disease.ContagionValidator(v); err != nil {
-			return nil, &ValidationError{Name: "contagion", err: fmt.Errorf("ent: validator failed for field \"contagion\": %w", err)}
-		}
+		return nil, &ValidationError{Name: "Contagion", err: errors.New("ent: missing required field \"Contagion\"")}
 	}
 	var (
 		err  error
@@ -196,13 +181,13 @@ func (dc *DiseaseCreate) createSpec() (*Disease, *sqlgraph.CreateSpec) {
 		})
 		d.Name = value
 	}
-	if value, ok := dc.mutation.Syptom(); ok {
+	if value, ok := dc.mutation.Symptom(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: disease.FieldSyptom,
+			Column: disease.FieldSymptom,
 		})
-		d.Syptom = value
+		d.Symptom = value
 	}
 	if value, ok := dc.mutation.Contagion(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

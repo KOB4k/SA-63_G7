@@ -28,7 +28,7 @@ func (su *SeverityUpdate) Where(ps ...predicate.Severity) *SeverityUpdate {
 	return su
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (su *SeverityUpdate) SetName(s string) *SeverityUpdate {
 	su.mutation.SetName(s)
 	return su
@@ -71,11 +71,6 @@ func (su *SeverityUpdate) RemoveDisease(d ...*Disease) *SeverityUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (su *SeverityUpdate) Save(ctx context.Context) (int, error) {
-	if v, ok := su.mutation.Name(); ok {
-		if err := severity.NameValidator(v); err != nil {
-			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
-	}
 
 	var (
 		err      error
@@ -207,7 +202,7 @@ type SeverityUpdateOne struct {
 	mutation *SeverityMutation
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (suo *SeverityUpdateOne) SetName(s string) *SeverityUpdateOne {
 	suo.mutation.SetName(s)
 	return suo
@@ -250,11 +245,6 @@ func (suo *SeverityUpdateOne) RemoveDisease(d ...*Disease) *SeverityUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (suo *SeverityUpdateOne) Save(ctx context.Context) (*Severity, error) {
-	if v, ok := suo.mutation.Name(); ok {
-		if err := severity.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
-	}
 
 	var (
 		err  error

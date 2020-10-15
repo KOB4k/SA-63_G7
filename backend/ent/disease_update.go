@@ -30,19 +30,19 @@ func (du *DiseaseUpdate) Where(ps ...predicate.Disease) *DiseaseUpdate {
 	return du
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (du *DiseaseUpdate) SetName(s string) *DiseaseUpdate {
 	du.mutation.SetName(s)
 	return du
 }
 
-// SetSyptom sets the syptom field.
-func (du *DiseaseUpdate) SetSyptom(s string) *DiseaseUpdate {
-	du.mutation.SetSyptom(s)
+// SetSymptom sets the Symptom field.
+func (du *DiseaseUpdate) SetSymptom(s string) *DiseaseUpdate {
+	du.mutation.SetSymptom(s)
 	return du
 }
 
-// SetContagion sets the contagion field.
+// SetContagion sets the Contagion field.
 func (du *DiseaseUpdate) SetContagion(s string) *DiseaseUpdate {
 	du.mutation.SetContagion(s)
 	return du
@@ -86,13 +86,13 @@ func (du *DiseaseUpdate) SetServerity(s *Severity) *DiseaseUpdate {
 	return du.SetServerityID(s.ID)
 }
 
-// SetDiseasetypeID sets the diseasetype edge to DiseaseType by id.
+// SetDiseasetypeID sets the diseasetype edge to Diseasetype by id.
 func (du *DiseaseUpdate) SetDiseasetypeID(id int) *DiseaseUpdate {
 	du.mutation.SetDiseasetypeID(id)
 	return du
 }
 
-// SetNillableDiseasetypeID sets the diseasetype edge to DiseaseType by id if the given value is not nil.
+// SetNillableDiseasetypeID sets the diseasetype edge to Diseasetype by id if the given value is not nil.
 func (du *DiseaseUpdate) SetNillableDiseasetypeID(id *int) *DiseaseUpdate {
 	if id != nil {
 		du = du.SetDiseasetypeID(*id)
@@ -100,8 +100,8 @@ func (du *DiseaseUpdate) SetNillableDiseasetypeID(id *int) *DiseaseUpdate {
 	return du
 }
 
-// SetDiseasetype sets the diseasetype edge to DiseaseType.
-func (du *DiseaseUpdate) SetDiseasetype(d *DiseaseType) *DiseaseUpdate {
+// SetDiseasetype sets the diseasetype edge to Diseasetype.
+func (du *DiseaseUpdate) SetDiseasetype(d *Diseasetype) *DiseaseUpdate {
 	return du.SetDiseasetypeID(d.ID)
 }
 
@@ -122,7 +122,7 @@ func (du *DiseaseUpdate) ClearServerity() *DiseaseUpdate {
 	return du
 }
 
-// ClearDiseasetype clears the diseasetype edge to DiseaseType.
+// ClearDiseasetype clears the diseasetype edge to Diseasetype.
 func (du *DiseaseUpdate) ClearDiseasetype() *DiseaseUpdate {
 	du.mutation.ClearDiseasetype()
 	return du
@@ -130,21 +130,6 @@ func (du *DiseaseUpdate) ClearDiseasetype() *DiseaseUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (du *DiseaseUpdate) Save(ctx context.Context) (int, error) {
-	if v, ok := du.mutation.Name(); ok {
-		if err := disease.NameValidator(v); err != nil {
-			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
-	}
-	if v, ok := du.mutation.Syptom(); ok {
-		if err := disease.SyptomValidator(v); err != nil {
-			return 0, &ValidationError{Name: "syptom", err: fmt.Errorf("ent: validator failed for field \"syptom\": %w", err)}
-		}
-	}
-	if v, ok := du.mutation.Contagion(); ok {
-		if err := disease.ContagionValidator(v); err != nil {
-			return 0, &ValidationError{Name: "contagion", err: fmt.Errorf("ent: validator failed for field \"contagion\": %w", err)}
-		}
-	}
 
 	var (
 		err      error
@@ -220,11 +205,11 @@ func (du *DiseaseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: disease.FieldName,
 		})
 	}
-	if value, ok := du.mutation.Syptom(); ok {
+	if value, ok := du.mutation.Symptom(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: disease.FieldSyptom,
+			Column: disease.FieldSymptom,
 		})
 	}
 	if value, ok := du.mutation.Contagion(); ok {
@@ -357,19 +342,19 @@ type DiseaseUpdateOne struct {
 	mutation *DiseaseMutation
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (duo *DiseaseUpdateOne) SetName(s string) *DiseaseUpdateOne {
 	duo.mutation.SetName(s)
 	return duo
 }
 
-// SetSyptom sets the syptom field.
-func (duo *DiseaseUpdateOne) SetSyptom(s string) *DiseaseUpdateOne {
-	duo.mutation.SetSyptom(s)
+// SetSymptom sets the Symptom field.
+func (duo *DiseaseUpdateOne) SetSymptom(s string) *DiseaseUpdateOne {
+	duo.mutation.SetSymptom(s)
 	return duo
 }
 
-// SetContagion sets the contagion field.
+// SetContagion sets the Contagion field.
 func (duo *DiseaseUpdateOne) SetContagion(s string) *DiseaseUpdateOne {
 	duo.mutation.SetContagion(s)
 	return duo
@@ -413,13 +398,13 @@ func (duo *DiseaseUpdateOne) SetServerity(s *Severity) *DiseaseUpdateOne {
 	return duo.SetServerityID(s.ID)
 }
 
-// SetDiseasetypeID sets the diseasetype edge to DiseaseType by id.
+// SetDiseasetypeID sets the diseasetype edge to Diseasetype by id.
 func (duo *DiseaseUpdateOne) SetDiseasetypeID(id int) *DiseaseUpdateOne {
 	duo.mutation.SetDiseasetypeID(id)
 	return duo
 }
 
-// SetNillableDiseasetypeID sets the diseasetype edge to DiseaseType by id if the given value is not nil.
+// SetNillableDiseasetypeID sets the diseasetype edge to Diseasetype by id if the given value is not nil.
 func (duo *DiseaseUpdateOne) SetNillableDiseasetypeID(id *int) *DiseaseUpdateOne {
 	if id != nil {
 		duo = duo.SetDiseasetypeID(*id)
@@ -427,8 +412,8 @@ func (duo *DiseaseUpdateOne) SetNillableDiseasetypeID(id *int) *DiseaseUpdateOne
 	return duo
 }
 
-// SetDiseasetype sets the diseasetype edge to DiseaseType.
-func (duo *DiseaseUpdateOne) SetDiseasetype(d *DiseaseType) *DiseaseUpdateOne {
+// SetDiseasetype sets the diseasetype edge to Diseasetype.
+func (duo *DiseaseUpdateOne) SetDiseasetype(d *Diseasetype) *DiseaseUpdateOne {
 	return duo.SetDiseasetypeID(d.ID)
 }
 
@@ -449,7 +434,7 @@ func (duo *DiseaseUpdateOne) ClearServerity() *DiseaseUpdateOne {
 	return duo
 }
 
-// ClearDiseasetype clears the diseasetype edge to DiseaseType.
+// ClearDiseasetype clears the diseasetype edge to Diseasetype.
 func (duo *DiseaseUpdateOne) ClearDiseasetype() *DiseaseUpdateOne {
 	duo.mutation.ClearDiseasetype()
 	return duo
@@ -457,21 +442,6 @@ func (duo *DiseaseUpdateOne) ClearDiseasetype() *DiseaseUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (duo *DiseaseUpdateOne) Save(ctx context.Context) (*Disease, error) {
-	if v, ok := duo.mutation.Name(); ok {
-		if err := disease.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
-	}
-	if v, ok := duo.mutation.Syptom(); ok {
-		if err := disease.SyptomValidator(v); err != nil {
-			return nil, &ValidationError{Name: "syptom", err: fmt.Errorf("ent: validator failed for field \"syptom\": %w", err)}
-		}
-	}
-	if v, ok := duo.mutation.Contagion(); ok {
-		if err := disease.ContagionValidator(v); err != nil {
-			return nil, &ValidationError{Name: "contagion", err: fmt.Errorf("ent: validator failed for field \"contagion\": %w", err)}
-		}
-	}
 
 	var (
 		err  error
@@ -545,11 +515,11 @@ func (duo *DiseaseUpdateOne) sqlSave(ctx context.Context) (d *Disease, err error
 			Column: disease.FieldName,
 		})
 	}
-	if value, ok := duo.mutation.Syptom(); ok {
+	if value, ok := duo.mutation.Symptom(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: disease.FieldSyptom,
+			Column: disease.FieldSymptom,
 		})
 	}
 	if value, ok := duo.mutation.Contagion(); ok {

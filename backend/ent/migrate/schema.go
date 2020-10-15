@@ -12,9 +12,9 @@ var (
 	DiseasesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "name", Type: field.TypeString},
-		{Name: "syptom", Type: field.TypeString},
+		{Name: "symptom", Type: field.TypeString},
 		{Name: "contagion", Type: field.TypeString},
-		{Name: "disease_type_disease", Type: field.TypeInt, Nullable: true},
+		{Name: "diseasetype_disease", Type: field.TypeInt, Nullable: true},
 		{Name: "employee_disease", Type: field.TypeInt, Nullable: true},
 		{Name: "severity_disease", Type: field.TypeInt, Nullable: true},
 	}
@@ -25,10 +25,10 @@ var (
 		PrimaryKey: []*schema.Column{DiseasesColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:  "diseases_disease_types_disease",
+				Symbol:  "diseases_diseasetypes_disease",
 				Columns: []*schema.Column{DiseasesColumns[4]},
 
-				RefColumns: []*schema.Column{DiseaseTypesColumns[0]},
+				RefColumns: []*schema.Column{DiseasetypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
@@ -47,22 +47,22 @@ var (
 			},
 		},
 	}
-	// DiseaseTypesColumns holds the columns for the "disease_types" table.
-	DiseaseTypesColumns = []*schema.Column{
+	// DiseasetypesColumns holds the columns for the "diseasetypes" table.
+	DiseasetypesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "name", Type: field.TypeString},
 	}
-	// DiseaseTypesTable holds the schema information for the "disease_types" table.
-	DiseaseTypesTable = &schema.Table{
-		Name:        "disease_types",
-		Columns:     DiseaseTypesColumns,
-		PrimaryKey:  []*schema.Column{DiseaseTypesColumns[0]},
+	// DiseasetypesTable holds the schema information for the "diseasetypes" table.
+	DiseasetypesTable = &schema.Table{
+		Name:        "diseasetypes",
+		Columns:     DiseasetypesColumns,
+		PrimaryKey:  []*schema.Column{DiseasetypesColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{},
 	}
 	// EmployeesColumns holds the columns for the "employees" table.
 	EmployeesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString},
+		{Name: "user_id", Type: field.TypeString},
 	}
 	// EmployeesTable holds the schema information for the "employees" table.
 	EmployeesTable = &schema.Table{
@@ -86,14 +86,14 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		DiseasesTable,
-		DiseaseTypesTable,
+		DiseasetypesTable,
 		EmployeesTable,
 		SeveritiesTable,
 	}
 )
 
 func init() {
-	DiseasesTable.ForeignKeys[0].RefTable = DiseaseTypesTable
+	DiseasesTable.ForeignKeys[0].RefTable = DiseasetypesTable
 	DiseasesTable.ForeignKeys[1].RefTable = EmployeesTable
 	DiseasesTable.ForeignKeys[2].RefTable = SeveritiesTable
 }

@@ -270,7 +270,7 @@ func (sq *SeverityQuery) WithDisease(opts ...func(*DiseaseQuery)) *SeverityQuery
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		Name string `json:"Name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -296,7 +296,7 @@ func (sq *SeverityQuery) GroupBy(field string, fields ...string) *SeverityGroupB
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		Name string `json:"Name,omitempty"`
 //	}
 //
 //	client.Severity.Query().

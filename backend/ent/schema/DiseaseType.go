@@ -6,19 +6,20 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 )
 
-type DiseaseType struct {
+// Diseasetype schema
+type Diseasetype struct {
 	ent.Schema
 }
 
-//Fields of the DiseaseType
-func (DiseaseType) Fields() []ent.Field {
+//Fields of the Diseasetype
+func (Diseasetype) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("name").NotEmpty(),
+		field.String("Name"),
 	}
 }
 
-// Edges of the DiseaseType.
-func (DiseaseType) Edges() []ent.Edge {
+// Edges of the Diseasetype.
+func (Diseasetype) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("disease", Disease.Type),
 	}

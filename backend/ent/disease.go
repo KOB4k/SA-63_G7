@@ -18,18 +18,18 @@ type Disease struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Name holds the value of the "name" field.
-	Name string `json:"name,omitempty"`
-	// Syptom holds the value of the "syptom" field.
-	Syptom string `json:"syptom,omitempty"`
-	// Contagion holds the value of the "contagion" field.
-	Contagion string `json:"contagion,omitempty"`
+	// Name holds the value of the "Name" field.
+	Name string `json:"Name,omitempty"`
+	// Symptom holds the value of the "Symptom" field.
+	Symptom string `json:"Symptom,omitempty"`
+	// Contagion holds the value of the "Contagion" field.
+	Contagion string `json:"Contagion,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the DiseaseQuery when eager-loading is set.
-	Edges                DiseaseEdges `json:"edges"`
-	disease_type_disease *int
-	employee_disease     *int
-	severity_disease     *int
+	Edges               DiseaseEdges `json:"edges"`
+	diseasetype_disease *int
+	employee_disease    *int
+	severity_disease    *int
 }
 
 // DiseaseEdges holds the relations/edges for other nodes in the graph.
@@ -39,7 +39,7 @@ type DiseaseEdges struct {
 	// Serverity holds the value of the serverity edge.
 	Serverity *Severity
 	// Diseasetype holds the value of the diseasetype edge.
-	Diseasetype *DiseaseType
+	Diseasetype *Diseasetype
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [3]bool
@@ -75,7 +75,7 @@ func (e DiseaseEdges) ServerityOrErr() (*Severity, error) {
 
 // DiseasetypeOrErr returns the Diseasetype value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e DiseaseEdges) DiseasetypeOrErr() (*DiseaseType, error) {
+func (e DiseaseEdges) DiseasetypeOrErr() (*Diseasetype, error) {
 	if e.loadedTypes[2] {
 		if e.Diseasetype == nil {
 			// The edge diseasetype was loaded in eager-loading,
@@ -91,16 +91,16 @@ func (e DiseaseEdges) DiseasetypeOrErr() (*DiseaseType, error) {
 func (*Disease) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // name
-		&sql.NullString{}, // syptom
-		&sql.NullString{}, // contagion
+		&sql.NullString{}, // Name
+		&sql.NullString{}, // Symptom
+		&sql.NullString{}, // Contagion
 	}
 }
 
 // fkValues returns the types for scanning foreign-keys values from sql.Rows.
 func (*Disease) fkValues() []interface{} {
 	return []interface{}{
-		&sql.NullInt64{}, // disease_type_disease
+		&sql.NullInt64{}, // diseasetype_disease
 		&sql.NullInt64{}, // employee_disease
 		&sql.NullInt64{}, // severity_disease
 	}
@@ -119,27 +119,27 @@ func (d *Disease) assignValues(values ...interface{}) error {
 	d.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field name", values[0])
+		return fmt.Errorf("unexpected type %T for field Name", values[0])
 	} else if value.Valid {
 		d.Name = value.String
 	}
 	if value, ok := values[1].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field syptom", values[1])
+		return fmt.Errorf("unexpected type %T for field Symptom", values[1])
 	} else if value.Valid {
-		d.Syptom = value.String
+		d.Symptom = value.String
 	}
 	if value, ok := values[2].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field contagion", values[2])
+		return fmt.Errorf("unexpected type %T for field Contagion", values[2])
 	} else if value.Valid {
 		d.Contagion = value.String
 	}
 	values = values[3:]
 	if len(values) == len(disease.ForeignKeys) {
 		if value, ok := values[0].(*sql.NullInt64); !ok {
-			return fmt.Errorf("unexpected type %T for edge-field disease_type_disease", value)
+			return fmt.Errorf("unexpected type %T for edge-field diseasetype_disease", value)
 		} else if value.Valid {
-			d.disease_type_disease = new(int)
-			*d.disease_type_disease = int(value.Int64)
+			d.diseasetype_disease = new(int)
+			*d.diseasetype_disease = int(value.Int64)
 		}
 		if value, ok := values[1].(*sql.NullInt64); !ok {
 			return fmt.Errorf("unexpected type %T for edge-field employee_disease", value)
@@ -168,7 +168,7 @@ func (d *Disease) QueryServerity() *SeverityQuery {
 }
 
 // QueryDiseasetype queries the diseasetype edge of the Disease.
-func (d *Disease) QueryDiseasetype() *DiseaseTypeQuery {
+func (d *Disease) QueryDiseasetype() *DiseasetypeQuery {
 	return (&DiseaseClient{config: d.config}).QueryDiseasetype(d)
 }
 
@@ -195,11 +195,11 @@ func (d *Disease) String() string {
 	var builder strings.Builder
 	builder.WriteString("Disease(")
 	builder.WriteString(fmt.Sprintf("id=%v", d.ID))
-	builder.WriteString(", name=")
+	builder.WriteString(", Name=")
 	builder.WriteString(d.Name)
-	builder.WriteString(", syptom=")
-	builder.WriteString(d.Syptom)
-	builder.WriteString(", contagion=")
+	builder.WriteString(", Symptom=")
+	builder.WriteString(d.Symptom)
+	builder.WriteString(", Contagion=")
 	builder.WriteString(d.Contagion)
 	builder.WriteByte(')')
 	return builder.String()

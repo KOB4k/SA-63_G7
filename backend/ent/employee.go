@@ -15,8 +15,8 @@ type Employee struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Name holds the value of the "name" field.
-	Name string `json:"name,omitempty"`
+	// UserID holds the value of the "User_id" field.
+	UserID string `json:"User_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the EmployeeQuery when eager-loading is set.
 	Edges EmployeeEdges `json:"edges"`
@@ -44,7 +44,7 @@ func (e EmployeeEdges) DiseaseOrErr() ([]*Disease, error) {
 func (*Employee) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // name
+		&sql.NullString{}, // User_id
 	}
 }
 
@@ -61,9 +61,9 @@ func (e *Employee) assignValues(values ...interface{}) error {
 	e.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field name", values[0])
+		return fmt.Errorf("unexpected type %T for field User_id", values[0])
 	} else if value.Valid {
-		e.Name = value.String
+		e.UserID = value.String
 	}
 	return nil
 }
@@ -96,8 +96,8 @@ func (e *Employee) String() string {
 	var builder strings.Builder
 	builder.WriteString("Employee(")
 	builder.WriteString(fmt.Sprintf("id=%v", e.ID))
-	builder.WriteString(", name=")
-	builder.WriteString(e.Name)
+	builder.WriteString(", User_id=")
+	builder.WriteString(e.UserID)
 	builder.WriteByte(')')
 	return builder.String()
 }

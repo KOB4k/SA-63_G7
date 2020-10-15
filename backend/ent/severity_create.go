@@ -20,7 +20,7 @@ type SeverityCreate struct {
 	hooks    []Hook
 }
 
-// SetName sets the name field.
+// SetName sets the Name field.
 func (sc *SeverityCreate) SetName(s string) *SeverityCreate {
 	sc.mutation.SetName(s)
 	return sc
@@ -49,12 +49,7 @@ func (sc *SeverityCreate) Mutation() *SeverityMutation {
 // Save creates the Severity in the database.
 func (sc *SeverityCreate) Save(ctx context.Context) (*Severity, error) {
 	if _, ok := sc.mutation.Name(); !ok {
-		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
-	}
-	if v, ok := sc.mutation.Name(); ok {
-		if err := severity.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
+		return nil, &ValidationError{Name: "Name", err: errors.New("ent: missing required field \"Name\"")}
 	}
 	var (
 		err  error

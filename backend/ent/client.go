@@ -26,8 +26,8 @@ type Client struct {
 	Schema *migrate.Schema
 	// Disease is the client for interacting with the Disease builders.
 	Disease *DiseaseClient
-	// DiseaseType is the client for interacting with the DiseaseType builders.
-	DiseaseType *DiseaseTypeClient
+	// Diseasetype is the client for interacting with the Diseasetype builders.
+	Diseasetype *DiseasetypeClient
 	// Employee is the client for interacting with the Employee builders.
 	Employee *EmployeeClient
 	// Severity is the client for interacting with the Severity builders.
@@ -46,7 +46,7 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.Disease = NewDiseaseClient(c.config)
-	c.DiseaseType = NewDiseaseTypeClient(c.config)
+	c.Diseasetype = NewDiseasetypeClient(c.config)
 	c.Employee = NewEmployeeClient(c.config)
 	c.Severity = NewSeverityClient(c.config)
 }
@@ -82,7 +82,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		ctx:         ctx,
 		config:      cfg,
 		Disease:     NewDiseaseClient(cfg),
-		DiseaseType: NewDiseaseTypeClient(cfg),
+		Diseasetype: NewDiseasetypeClient(cfg),
 		Employee:    NewEmployeeClient(cfg),
 		Severity:    NewSeverityClient(cfg),
 	}, nil
@@ -101,7 +101,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	return &Tx{
 		config:      cfg,
 		Disease:     NewDiseaseClient(cfg),
-		DiseaseType: NewDiseaseTypeClient(cfg),
+		Diseasetype: NewDiseasetypeClient(cfg),
 		Employee:    NewEmployeeClient(cfg),
 		Severity:    NewSeverityClient(cfg),
 	}, nil
@@ -133,7 +133,7 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	c.Disease.Use(hooks...)
-	c.DiseaseType.Use(hooks...)
+	c.Diseasetype.Use(hooks...)
 	c.Employee.Use(hooks...)
 	c.Severity.Use(hooks...)
 }
@@ -249,8 +249,8 @@ func (c *DiseaseClient) QueryServerity(d *Disease) *SeverityQuery {
 }
 
 // QueryDiseasetype queries the diseasetype edge of a Disease.
-func (c *DiseaseClient) QueryDiseasetype(d *Disease) *DiseaseTypeQuery {
-	query := &DiseaseTypeQuery{config: c.config}
+func (c *DiseaseClient) QueryDiseasetype(d *Disease) *DiseasetypeQuery {
+	query := &DiseasetypeQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
 		id := d.ID
 		step := sqlgraph.NewStep(
@@ -269,103 +269,103 @@ func (c *DiseaseClient) Hooks() []Hook {
 	return c.hooks.Disease
 }
 
-// DiseaseTypeClient is a client for the DiseaseType schema.
-type DiseaseTypeClient struct {
+// DiseasetypeClient is a client for the Diseasetype schema.
+type DiseasetypeClient struct {
 	config
 }
 
-// NewDiseaseTypeClient returns a client for the DiseaseType from the given config.
-func NewDiseaseTypeClient(c config) *DiseaseTypeClient {
-	return &DiseaseTypeClient{config: c}
+// NewDiseasetypeClient returns a client for the Diseasetype from the given config.
+func NewDiseasetypeClient(c config) *DiseasetypeClient {
+	return &DiseasetypeClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
 // A call to `Use(f, g, h)` equals to `diseasetype.Hooks(f(g(h())))`.
-func (c *DiseaseTypeClient) Use(hooks ...Hook) {
-	c.hooks.DiseaseType = append(c.hooks.DiseaseType, hooks...)
+func (c *DiseasetypeClient) Use(hooks ...Hook) {
+	c.hooks.Diseasetype = append(c.hooks.Diseasetype, hooks...)
 }
 
-// Create returns a create builder for DiseaseType.
-func (c *DiseaseTypeClient) Create() *DiseaseTypeCreate {
-	mutation := newDiseaseTypeMutation(c.config, OpCreate)
-	return &DiseaseTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for Diseasetype.
+func (c *DiseasetypeClient) Create() *DiseasetypeCreate {
+	mutation := newDiseasetypeMutation(c.config, OpCreate)
+	return &DiseasetypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Update returns an update builder for DiseaseType.
-func (c *DiseaseTypeClient) Update() *DiseaseTypeUpdate {
-	mutation := newDiseaseTypeMutation(c.config, OpUpdate)
-	return &DiseaseTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Diseasetype.
+func (c *DiseasetypeClient) Update() *DiseasetypeUpdate {
+	mutation := newDiseasetypeMutation(c.config, OpUpdate)
+	return &DiseasetypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *DiseaseTypeClient) UpdateOne(dt *DiseaseType) *DiseaseTypeUpdateOne {
-	mutation := newDiseaseTypeMutation(c.config, OpUpdateOne, withDiseaseType(dt))
-	return &DiseaseTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DiseasetypeClient) UpdateOne(d *Diseasetype) *DiseasetypeUpdateOne {
+	mutation := newDiseasetypeMutation(c.config, OpUpdateOne, withDiseasetype(d))
+	return &DiseasetypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *DiseaseTypeClient) UpdateOneID(id int) *DiseaseTypeUpdateOne {
-	mutation := newDiseaseTypeMutation(c.config, OpUpdateOne, withDiseaseTypeID(id))
-	return &DiseaseTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DiseasetypeClient) UpdateOneID(id int) *DiseasetypeUpdateOne {
+	mutation := newDiseasetypeMutation(c.config, OpUpdateOne, withDiseasetypeID(id))
+	return &DiseasetypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for DiseaseType.
-func (c *DiseaseTypeClient) Delete() *DiseaseTypeDelete {
-	mutation := newDiseaseTypeMutation(c.config, OpDelete)
-	return &DiseaseTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Diseasetype.
+func (c *DiseasetypeClient) Delete() *DiseasetypeDelete {
+	mutation := newDiseasetypeMutation(c.config, OpDelete)
+	return &DiseasetypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *DiseaseTypeClient) DeleteOne(dt *DiseaseType) *DiseaseTypeDeleteOne {
-	return c.DeleteOneID(dt.ID)
+func (c *DiseasetypeClient) DeleteOne(d *Diseasetype) *DiseasetypeDeleteOne {
+	return c.DeleteOneID(d.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *DiseaseTypeClient) DeleteOneID(id int) *DiseaseTypeDeleteOne {
+func (c *DiseasetypeClient) DeleteOneID(id int) *DiseasetypeDeleteOne {
 	builder := c.Delete().Where(diseasetype.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &DiseaseTypeDeleteOne{builder}
+	return &DiseasetypeDeleteOne{builder}
 }
 
-// Create returns a query builder for DiseaseType.
-func (c *DiseaseTypeClient) Query() *DiseaseTypeQuery {
-	return &DiseaseTypeQuery{config: c.config}
+// Create returns a query builder for Diseasetype.
+func (c *DiseasetypeClient) Query() *DiseasetypeQuery {
+	return &DiseasetypeQuery{config: c.config}
 }
 
-// Get returns a DiseaseType entity by its id.
-func (c *DiseaseTypeClient) Get(ctx context.Context, id int) (*DiseaseType, error) {
+// Get returns a Diseasetype entity by its id.
+func (c *DiseasetypeClient) Get(ctx context.Context, id int) (*Diseasetype, error) {
 	return c.Query().Where(diseasetype.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *DiseaseTypeClient) GetX(ctx context.Context, id int) *DiseaseType {
-	dt, err := c.Get(ctx, id)
+func (c *DiseasetypeClient) GetX(ctx context.Context, id int) *Diseasetype {
+	d, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
-	return dt
+	return d
 }
 
-// QueryDisease queries the disease edge of a DiseaseType.
-func (c *DiseaseTypeClient) QueryDisease(dt *DiseaseType) *DiseaseQuery {
+// QueryDisease queries the disease edge of a Diseasetype.
+func (c *DiseasetypeClient) QueryDisease(d *Diseasetype) *DiseaseQuery {
 	query := &DiseaseQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := dt.ID
+		id := d.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(diseasetype.Table, diseasetype.FieldID, id),
 			sqlgraph.To(disease.Table, disease.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, diseasetype.DiseaseTable, diseasetype.DiseaseColumn),
 		)
-		fromV = sqlgraph.Neighbors(dt.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // Hooks returns the client hooks.
-func (c *DiseaseTypeClient) Hooks() []Hook {
-	return c.hooks.DiseaseType
+func (c *DiseasetypeClient) Hooks() []Hook {
+	return c.hooks.Diseasetype
 }
 
 // EmployeeClient is a client for the Employee schema.

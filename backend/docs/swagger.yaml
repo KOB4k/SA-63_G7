@@ -1,16 +1,109 @@
 basePath: /api/v1
 definitions:
-  ent.User:
+  ent.Disease:
     properties:
-      age:
-        description: Age holds the value of the "age" field.
-        type: integer
+      Contagion:
+        description: Contagion holds the value of the "Contagion" field.
+        type: string
+      Name:
+        description: Name holds the value of the "Name" field.
+        type: string
+      Symptom:
+        description: Symptom holds the value of the "Symptom" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.DiseaseEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the DiseaseQuery when eager-loading is set.
+        type: object
       id:
         description: ID of the ent.
         type: integer
-      name:
-        description: Name holds the value of the "name" field.
+    type: object
+  ent.DiseaseEdges:
+    properties:
+      diseasetype:
+        $ref: '#/definitions/ent.Diseasetype'
+        description: Diseasetype holds the value of the diseasetype edge.
+        type: object
+      employee:
+        $ref: '#/definitions/ent.Employee'
+        description: Employee holds the value of the employee edge.
+        type: object
+      serverity:
+        $ref: '#/definitions/ent.Severity'
+        description: Serverity holds the value of the serverity edge.
+        type: object
+    type: object
+  ent.Diseasetype:
+    properties:
+      Name:
+        description: Name holds the value of the "Name" field.
         type: string
+      edges:
+        $ref: '#/definitions/ent.DiseasetypeEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the DiseasetypeQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.DiseasetypeEdges:
+    properties:
+      disease:
+        description: Disease holds the value of the disease edge.
+        items:
+          $ref: '#/definitions/ent.Disease'
+        type: array
+    type: object
+  ent.Employee:
+    properties:
+      User_id:
+        description: UserID holds the value of the "User_id" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.EmployeeEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the EmployeeQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.EmployeeEdges:
+    properties:
+      disease:
+        description: Disease holds the value of the disease edge.
+        items:
+          $ref: '#/definitions/ent.Disease'
+        type: array
+    type: object
+  ent.Severity:
+    properties:
+      Name:
+        description: Name holds the value of the "Name" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.SeverityEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the SeverityQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.SeverityEdges:
+    properties:
+      disease:
+        description: Disease holds the value of the disease edge.
+        items:
+          $ref: '#/definitions/ent.Disease'
+        type: array
     type: object
   gin.H:
     additionalProperties: true
@@ -29,10 +122,39 @@ info:
   title: SUT SA Example API
   version: "1.0"
 paths:
-  /users:
+  /Employees:
+    post:
+      consumes:
+      - application/json
+      description: Create employee
+      operationId: create-employee
+      parameters:
+      - description: Employee entity
+        in: body
+        name: employee
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Employee'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create employee
+  /diseases:
     get:
-      description: list user entities
-      operationId: list-user
+      description: list disease entities
+      operationId: list-disease
       parameters:
       - description: Limit
         in: query
@@ -49,7 +171,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/ent.User'
+              $ref: '#/definitions/ent.Disease'
             type: array
         "400":
           description: Bad Request
@@ -59,26 +181,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: List user entities
+      summary: List disease entities
     post:
       consumes:
       - application/json
-      description: Create user
-      operationId: create-user
+      description: Create disease
+      operationId: create-disease
       parameters:
-      - description: User entity
+      - description: Disease entity
         in: body
-        name: user
+        name: disease
         required: true
         schema:
-          $ref: '#/definitions/ent.User'
+          $ref: '#/definitions/ent.Disease'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.User'
+            $ref: '#/definitions/ent.Disease'
         "400":
           description: Bad Request
           schema:
@@ -87,45 +209,19 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Create user
-  /users/{id}:
-    delete:
-      description: get user by ID
-      operationId: delete-user
-      parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/gin.H'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/gin.H'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/gin.H'
-      summary: Delete a user entity by ID
+      summary: Create disease
+  /diseasetypes:
     get:
-      description: get user by ID
-      operationId: get-user
+      description: list diseasetype entities
+      operationId: list-diseasetype
       parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
         type: integer
       produces:
       - application/json
@@ -133,44 +229,37 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.User'
+            items:
+              $ref: '#/definitions/ent.Diseasetype'
+            type: array
         "400":
           description: Bad Request
-          schema:
-            $ref: '#/definitions/gin.H'
-        "404":
-          description: Not Found
           schema:
             $ref: '#/definitions/gin.H'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Get a user entity by ID
-    put:
+      summary: List diseasetype entities
+    post:
       consumes:
       - application/json
-      description: update user by ID
-      operationId: update-user
+      description: Create diseasetype
+      operationId: create-diseasetype
       parameters:
-      - description: User ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: User entity
+      - description: Diseasetype entity
         in: body
-        name: user
+        name: diseasetype
         required: true
         schema:
-          $ref: '#/definitions/ent.User'
+          $ref: '#/definitions/ent.Diseasetype'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ent.User'
+            $ref: '#/definitions/ent.Diseasetype'
         "400":
           description: Bad Request
           schema:
@@ -179,7 +268,187 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/gin.H'
-      summary: Update a user entity by ID
+      summary: Create diseasetype
+  /diseasetypes/{id}:
+    get:
+      description: get diseasetype by ID
+      operationId: get-diseasetype
+      parameters:
+      - description: Diseasetype ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Diseasetype'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a diseasetype entity by ID
+  /employees:
+    get:
+      description: list employee entities
+      operationId: list-employee
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Employee'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List employee entities
+  /employees/{id}:
+    get:
+      description: get employee by ID
+      operationId: get-employee
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Employee'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a employee entity by ID
+  /severitys:
+    get:
+      description: list severity entities
+      operationId: list-severity
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Severity'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List severity entities
+    post:
+      consumes:
+      - application/json
+      description: Create severity
+      operationId: create-severity
+      parameters:
+      - description: Severity entity
+        in: body
+        name: severity
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Severity'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Severity'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create severity
+  /severitys/{id}:
+    get:
+      description: get severity by ID
+      operationId: get-severity
+      parameters:
+      - description: Severity ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Severity'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a severity entity by ID
 securityDefinitions:
   ApiKeyAuth:
     in: header

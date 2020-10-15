@@ -15,8 +15,8 @@ type Severity struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Name holds the value of the "name" field.
-	Name string `json:"name,omitempty"`
+	// Name holds the value of the "Name" field.
+	Name string `json:"Name,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SeverityQuery when eager-loading is set.
 	Edges SeverityEdges `json:"edges"`
@@ -44,7 +44,7 @@ func (e SeverityEdges) DiseaseOrErr() ([]*Disease, error) {
 func (*Severity) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // name
+		&sql.NullString{}, // Name
 	}
 }
 
@@ -61,7 +61,7 @@ func (s *Severity) assignValues(values ...interface{}) error {
 	s.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field name", values[0])
+		return fmt.Errorf("unexpected type %T for field Name", values[0])
 	} else if value.Valid {
 		s.Name = value.String
 	}
@@ -96,7 +96,7 @@ func (s *Severity) String() string {
 	var builder strings.Builder
 	builder.WriteString("Severity(")
 	builder.WriteString(fmt.Sprintf("id=%v", s.ID))
-	builder.WriteString(", name=")
+	builder.WriteString(", Name=")
 	builder.WriteString(s.Name)
 	builder.WriteByte(')')
 	return builder.String()

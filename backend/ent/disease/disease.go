@@ -9,8 +9,8 @@ const (
 	FieldID = "id"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldSyptom holds the string denoting the syptom field in the database.
-	FieldSyptom = "syptom"
+	// FieldSymptom holds the string denoting the symptom field in the database.
+	FieldSymptom = "symptom"
 	// FieldContagion holds the string denoting the contagion field in the database.
 	FieldContagion = "contagion"
 
@@ -39,33 +39,24 @@ const (
 	ServerityColumn = "severity_disease"
 	// DiseasetypeTable is the table the holds the diseasetype relation/edge.
 	DiseasetypeTable = "diseases"
-	// DiseasetypeInverseTable is the table name for the DiseaseType entity.
+	// DiseasetypeInverseTable is the table name for the Diseasetype entity.
 	// It exists in this package in order to avoid circular dependency with the "diseasetype" package.
-	DiseasetypeInverseTable = "disease_types"
+	DiseasetypeInverseTable = "diseasetypes"
 	// DiseasetypeColumn is the table column denoting the diseasetype relation/edge.
-	DiseasetypeColumn = "disease_type_disease"
+	DiseasetypeColumn = "diseasetype_disease"
 )
 
 // Columns holds all SQL columns for disease fields.
 var Columns = []string{
 	FieldID,
 	FieldName,
-	FieldSyptom,
+	FieldSymptom,
 	FieldContagion,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the Disease type.
 var ForeignKeys = []string{
-	"disease_type_disease",
+	"diseasetype_disease",
 	"employee_disease",
 	"severity_disease",
 }
-
-var (
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
-	// SyptomValidator is a validator for the "syptom" field. It is called by the builders before save.
-	SyptomValidator func(string) error
-	// ContagionValidator is a validator for the "contagion" field. It is called by the builders before save.
-	ContagionValidator func(string) error
-)

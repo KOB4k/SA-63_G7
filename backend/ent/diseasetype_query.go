@@ -17,14 +17,14 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 )
 
-// DiseaseTypeQuery is the builder for querying DiseaseType entities.
-type DiseaseTypeQuery struct {
+// DiseasetypeQuery is the builder for querying Diseasetype entities.
+type DiseasetypeQuery struct {
 	config
 	limit      *int
 	offset     *int
 	order      []OrderFunc
 	unique     []string
-	predicates []predicate.DiseaseType
+	predicates []predicate.Diseasetype
 	// eager-loading edges.
 	withDisease *DiseaseQuery
 	// intermediate query (i.e. traversal path).
@@ -33,72 +33,72 @@ type DiseaseTypeQuery struct {
 }
 
 // Where adds a new predicate for the builder.
-func (dtq *DiseaseTypeQuery) Where(ps ...predicate.DiseaseType) *DiseaseTypeQuery {
-	dtq.predicates = append(dtq.predicates, ps...)
-	return dtq
+func (dq *DiseasetypeQuery) Where(ps ...predicate.Diseasetype) *DiseasetypeQuery {
+	dq.predicates = append(dq.predicates, ps...)
+	return dq
 }
 
 // Limit adds a limit step to the query.
-func (dtq *DiseaseTypeQuery) Limit(limit int) *DiseaseTypeQuery {
-	dtq.limit = &limit
-	return dtq
+func (dq *DiseasetypeQuery) Limit(limit int) *DiseasetypeQuery {
+	dq.limit = &limit
+	return dq
 }
 
 // Offset adds an offset step to the query.
-func (dtq *DiseaseTypeQuery) Offset(offset int) *DiseaseTypeQuery {
-	dtq.offset = &offset
-	return dtq
+func (dq *DiseasetypeQuery) Offset(offset int) *DiseasetypeQuery {
+	dq.offset = &offset
+	return dq
 }
 
 // Order adds an order step to the query.
-func (dtq *DiseaseTypeQuery) Order(o ...OrderFunc) *DiseaseTypeQuery {
-	dtq.order = append(dtq.order, o...)
-	return dtq
+func (dq *DiseasetypeQuery) Order(o ...OrderFunc) *DiseasetypeQuery {
+	dq.order = append(dq.order, o...)
+	return dq
 }
 
 // QueryDisease chains the current query on the disease edge.
-func (dtq *DiseaseTypeQuery) QueryDisease() *DiseaseQuery {
-	query := &DiseaseQuery{config: dtq.config}
+func (dq *DiseasetypeQuery) QueryDisease() *DiseaseQuery {
+	query := &DiseaseQuery{config: dq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := dtq.prepareQuery(ctx); err != nil {
+		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
 		step := sqlgraph.NewStep(
-			sqlgraph.From(diseasetype.Table, diseasetype.FieldID, dtq.sqlQuery()),
+			sqlgraph.From(diseasetype.Table, diseasetype.FieldID, dq.sqlQuery()),
 			sqlgraph.To(disease.Table, disease.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, diseasetype.DiseaseTable, diseasetype.DiseaseColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(dtq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(dq.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
-// First returns the first DiseaseType entity in the query. Returns *NotFoundError when no diseasetype was found.
-func (dtq *DiseaseTypeQuery) First(ctx context.Context) (*DiseaseType, error) {
-	dts, err := dtq.Limit(1).All(ctx)
+// First returns the first Diseasetype entity in the query. Returns *NotFoundError when no diseasetype was found.
+func (dq *DiseasetypeQuery) First(ctx context.Context) (*Diseasetype, error) {
+	ds, err := dq.Limit(1).All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	if len(dts) == 0 {
+	if len(ds) == 0 {
 		return nil, &NotFoundError{diseasetype.Label}
 	}
-	return dts[0], nil
+	return ds[0], nil
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (dtq *DiseaseTypeQuery) FirstX(ctx context.Context) *DiseaseType {
-	dt, err := dtq.First(ctx)
+func (dq *DiseasetypeQuery) FirstX(ctx context.Context) *Diseasetype {
+	d, err := dq.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
-	return dt
+	return d
 }
 
-// FirstID returns the first DiseaseType id in the query. Returns *NotFoundError when no id was found.
-func (dtq *DiseaseTypeQuery) FirstID(ctx context.Context) (id int, err error) {
+// FirstID returns the first Diseasetype id in the query. Returns *NotFoundError when no id was found.
+func (dq *DiseasetypeQuery) FirstID(ctx context.Context) (id int, err error) {
 	var ids []int
-	if ids, err = dtq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = dq.Limit(1).IDs(ctx); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -109,23 +109,23 @@ func (dtq *DiseaseTypeQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstXID is like FirstID, but panics if an error occurs.
-func (dtq *DiseaseTypeQuery) FirstXID(ctx context.Context) int {
-	id, err := dtq.FirstID(ctx)
+func (dq *DiseasetypeQuery) FirstXID(ctx context.Context) int {
+	id, err := dq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
 	return id
 }
 
-// Only returns the only DiseaseType entity in the query, returns an error if not exactly one entity was returned.
-func (dtq *DiseaseTypeQuery) Only(ctx context.Context) (*DiseaseType, error) {
-	dts, err := dtq.Limit(2).All(ctx)
+// Only returns the only Diseasetype entity in the query, returns an error if not exactly one entity was returned.
+func (dq *DiseasetypeQuery) Only(ctx context.Context) (*Diseasetype, error) {
+	ds, err := dq.Limit(2).All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	switch len(dts) {
+	switch len(ds) {
 	case 1:
-		return dts[0], nil
+		return ds[0], nil
 	case 0:
 		return nil, &NotFoundError{diseasetype.Label}
 	default:
@@ -134,18 +134,18 @@ func (dtq *DiseaseTypeQuery) Only(ctx context.Context) (*DiseaseType, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (dtq *DiseaseTypeQuery) OnlyX(ctx context.Context) *DiseaseType {
-	dt, err := dtq.Only(ctx)
+func (dq *DiseasetypeQuery) OnlyX(ctx context.Context) *Diseasetype {
+	d, err := dq.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return dt
+	return d
 }
 
-// OnlyID returns the only DiseaseType id in the query, returns an error if not exactly one id was returned.
-func (dtq *DiseaseTypeQuery) OnlyID(ctx context.Context) (id int, err error) {
+// OnlyID returns the only Diseasetype id in the query, returns an error if not exactly one id was returned.
+func (dq *DiseasetypeQuery) OnlyID(ctx context.Context) (id int, err error) {
 	var ids []int
-	if ids, err = dtq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = dq.Limit(2).IDs(ctx); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -160,43 +160,43 @@ func (dtq *DiseaseTypeQuery) OnlyID(ctx context.Context) (id int, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (dtq *DiseaseTypeQuery) OnlyIDX(ctx context.Context) int {
-	id, err := dtq.OnlyID(ctx)
+func (dq *DiseasetypeQuery) OnlyIDX(ctx context.Context) int {
+	id, err := dq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return id
 }
 
-// All executes the query and returns a list of DiseaseTypes.
-func (dtq *DiseaseTypeQuery) All(ctx context.Context) ([]*DiseaseType, error) {
-	if err := dtq.prepareQuery(ctx); err != nil {
+// All executes the query and returns a list of Diseasetypes.
+func (dq *DiseasetypeQuery) All(ctx context.Context) ([]*Diseasetype, error) {
+	if err := dq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return dtq.sqlAll(ctx)
+	return dq.sqlAll(ctx)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (dtq *DiseaseTypeQuery) AllX(ctx context.Context) []*DiseaseType {
-	dts, err := dtq.All(ctx)
+func (dq *DiseasetypeQuery) AllX(ctx context.Context) []*Diseasetype {
+	ds, err := dq.All(ctx)
 	if err != nil {
 		panic(err)
 	}
-	return dts
+	return ds
 }
 
-// IDs executes the query and returns a list of DiseaseType ids.
-func (dtq *DiseaseTypeQuery) IDs(ctx context.Context) ([]int, error) {
+// IDs executes the query and returns a list of Diseasetype ids.
+func (dq *DiseasetypeQuery) IDs(ctx context.Context) ([]int, error) {
 	var ids []int
-	if err := dtq.Select(diseasetype.FieldID).Scan(ctx, &ids); err != nil {
+	if err := dq.Select(diseasetype.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (dtq *DiseaseTypeQuery) IDsX(ctx context.Context) []int {
-	ids, err := dtq.IDs(ctx)
+func (dq *DiseasetypeQuery) IDsX(ctx context.Context) []int {
+	ids, err := dq.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -204,16 +204,16 @@ func (dtq *DiseaseTypeQuery) IDsX(ctx context.Context) []int {
 }
 
 // Count returns the count of the given query.
-func (dtq *DiseaseTypeQuery) Count(ctx context.Context) (int, error) {
-	if err := dtq.prepareQuery(ctx); err != nil {
+func (dq *DiseasetypeQuery) Count(ctx context.Context) (int, error) {
+	if err := dq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return dtq.sqlCount(ctx)
+	return dq.sqlCount(ctx)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (dtq *DiseaseTypeQuery) CountX(ctx context.Context) int {
-	count, err := dtq.Count(ctx)
+func (dq *DiseasetypeQuery) CountX(ctx context.Context) int {
+	count, err := dq.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -221,16 +221,16 @@ func (dtq *DiseaseTypeQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (dtq *DiseaseTypeQuery) Exist(ctx context.Context) (bool, error) {
-	if err := dtq.prepareQuery(ctx); err != nil {
+func (dq *DiseasetypeQuery) Exist(ctx context.Context) (bool, error) {
+	if err := dq.prepareQuery(ctx); err != nil {
 		return false, err
 	}
-	return dtq.sqlExist(ctx)
+	return dq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (dtq *DiseaseTypeQuery) ExistX(ctx context.Context) bool {
-	exist, err := dtq.Exist(ctx)
+func (dq *DiseasetypeQuery) ExistX(ctx context.Context) bool {
+	exist, err := dq.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -239,29 +239,29 @@ func (dtq *DiseaseTypeQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the query builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (dtq *DiseaseTypeQuery) Clone() *DiseaseTypeQuery {
-	return &DiseaseTypeQuery{
-		config:     dtq.config,
-		limit:      dtq.limit,
-		offset:     dtq.offset,
-		order:      append([]OrderFunc{}, dtq.order...),
-		unique:     append([]string{}, dtq.unique...),
-		predicates: append([]predicate.DiseaseType{}, dtq.predicates...),
+func (dq *DiseasetypeQuery) Clone() *DiseasetypeQuery {
+	return &DiseasetypeQuery{
+		config:     dq.config,
+		limit:      dq.limit,
+		offset:     dq.offset,
+		order:      append([]OrderFunc{}, dq.order...),
+		unique:     append([]string{}, dq.unique...),
+		predicates: append([]predicate.Diseasetype{}, dq.predicates...),
 		// clone intermediate query.
-		sql:  dtq.sql.Clone(),
-		path: dtq.path,
+		sql:  dq.sql.Clone(),
+		path: dq.path,
 	}
 }
 
 //  WithDisease tells the query-builder to eager-loads the nodes that are connected to
 // the "disease" edge. The optional arguments used to configure the query builder of the edge.
-func (dtq *DiseaseTypeQuery) WithDisease(opts ...func(*DiseaseQuery)) *DiseaseTypeQuery {
-	query := &DiseaseQuery{config: dtq.config}
+func (dq *DiseasetypeQuery) WithDisease(opts ...func(*DiseaseQuery)) *DiseasetypeQuery {
+	query := &DiseaseQuery{config: dq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	dtq.withDisease = query
-	return dtq
+	dq.withDisease = query
+	return dq
 }
 
 // GroupBy used to group vertices by one or more fields/columns.
@@ -270,23 +270,23 @@ func (dtq *DiseaseTypeQuery) WithDisease(opts ...func(*DiseaseQuery)) *DiseaseTy
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		Name string `json:"Name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
-//	client.DiseaseType.Query().
+//	client.Diseasetype.Query().
 //		GroupBy(diseasetype.FieldName).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
-func (dtq *DiseaseTypeQuery) GroupBy(field string, fields ...string) *DiseaseTypeGroupBy {
-	group := &DiseaseTypeGroupBy{config: dtq.config}
+func (dq *DiseasetypeQuery) GroupBy(field string, fields ...string) *DiseasetypeGroupBy {
+	group := &DiseasetypeGroupBy{config: dq.config}
 	group.fields = append([]string{field}, fields...)
 	group.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := dtq.prepareQuery(ctx); err != nil {
+		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		return dtq.sqlQuery(), nil
+		return dq.sqlQuery(), nil
 	}
 	return group
 }
@@ -296,46 +296,46 @@ func (dtq *DiseaseTypeQuery) GroupBy(field string, fields ...string) *DiseaseTyp
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		Name string `json:"Name,omitempty"`
 //	}
 //
-//	client.DiseaseType.Query().
+//	client.Diseasetype.Query().
 //		Select(diseasetype.FieldName).
 //		Scan(ctx, &v)
 //
-func (dtq *DiseaseTypeQuery) Select(field string, fields ...string) *DiseaseTypeSelect {
-	selector := &DiseaseTypeSelect{config: dtq.config}
+func (dq *DiseasetypeQuery) Select(field string, fields ...string) *DiseasetypeSelect {
+	selector := &DiseasetypeSelect{config: dq.config}
 	selector.fields = append([]string{field}, fields...)
 	selector.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := dtq.prepareQuery(ctx); err != nil {
+		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		return dtq.sqlQuery(), nil
+		return dq.sqlQuery(), nil
 	}
 	return selector
 }
 
-func (dtq *DiseaseTypeQuery) prepareQuery(ctx context.Context) error {
-	if dtq.path != nil {
-		prev, err := dtq.path(ctx)
+func (dq *DiseasetypeQuery) prepareQuery(ctx context.Context) error {
+	if dq.path != nil {
+		prev, err := dq.path(ctx)
 		if err != nil {
 			return err
 		}
-		dtq.sql = prev
+		dq.sql = prev
 	}
 	return nil
 }
 
-func (dtq *DiseaseTypeQuery) sqlAll(ctx context.Context) ([]*DiseaseType, error) {
+func (dq *DiseasetypeQuery) sqlAll(ctx context.Context) ([]*Diseasetype, error) {
 	var (
-		nodes       = []*DiseaseType{}
-		_spec       = dtq.querySpec()
+		nodes       = []*Diseasetype{}
+		_spec       = dq.querySpec()
 		loadedTypes = [1]bool{
-			dtq.withDisease != nil,
+			dq.withDisease != nil,
 		}
 	)
 	_spec.ScanValues = func() []interface{} {
-		node := &DiseaseType{config: dtq.config}
+		node := &Diseasetype{config: dq.config}
 		nodes = append(nodes, node)
 		values := node.scanValues()
 		return values
@@ -348,16 +348,16 @@ func (dtq *DiseaseTypeQuery) sqlAll(ctx context.Context) ([]*DiseaseType, error)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(values...)
 	}
-	if err := sqlgraph.QueryNodes(ctx, dtq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, dq.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
 
-	if query := dtq.withDisease; query != nil {
+	if query := dq.withDisease; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
-		nodeids := make(map[int]*DiseaseType)
+		nodeids := make(map[int]*Diseasetype)
 		for i := range nodes {
 			fks = append(fks, nodes[i].ID)
 			nodeids[nodes[i].ID] = nodes[i]
@@ -371,13 +371,13 @@ func (dtq *DiseaseTypeQuery) sqlAll(ctx context.Context) ([]*DiseaseType, error)
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.disease_type_disease
+			fk := n.diseasetype_disease
 			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "disease_type_disease" is nil for node %v`, n.ID)
+				return nil, fmt.Errorf(`foreign-key "diseasetype_disease" is nil for node %v`, n.ID)
 			}
 			node, ok := nodeids[*fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "disease_type_disease" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "diseasetype_disease" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.Disease = append(node.Edges.Disease, n)
 		}
@@ -386,20 +386,20 @@ func (dtq *DiseaseTypeQuery) sqlAll(ctx context.Context) ([]*DiseaseType, error)
 	return nodes, nil
 }
 
-func (dtq *DiseaseTypeQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := dtq.querySpec()
-	return sqlgraph.CountNodes(ctx, dtq.driver, _spec)
+func (dq *DiseasetypeQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := dq.querySpec()
+	return sqlgraph.CountNodes(ctx, dq.driver, _spec)
 }
 
-func (dtq *DiseaseTypeQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := dtq.sqlCount(ctx)
+func (dq *DiseasetypeQuery) sqlExist(ctx context.Context) (bool, error) {
+	n, err := dq.sqlCount(ctx)
 	if err != nil {
 		return false, fmt.Errorf("ent: check existence: %v", err)
 	}
 	return n > 0, nil
 }
 
-func (dtq *DiseaseTypeQuery) querySpec() *sqlgraph.QuerySpec {
+func (dq *DiseasetypeQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := &sqlgraph.QuerySpec{
 		Node: &sqlgraph.NodeSpec{
 			Table:   diseasetype.Table,
@@ -409,23 +409,23 @@ func (dtq *DiseaseTypeQuery) querySpec() *sqlgraph.QuerySpec {
 				Column: diseasetype.FieldID,
 			},
 		},
-		From:   dtq.sql,
+		From:   dq.sql,
 		Unique: true,
 	}
-	if ps := dtq.predicates; len(ps) > 0 {
+	if ps := dq.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := dtq.limit; limit != nil {
+	if limit := dq.limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := dtq.offset; offset != nil {
+	if offset := dq.offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := dtq.order; len(ps) > 0 {
+	if ps := dq.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -435,33 +435,33 @@ func (dtq *DiseaseTypeQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (dtq *DiseaseTypeQuery) sqlQuery() *sql.Selector {
-	builder := sql.Dialect(dtq.driver.Dialect())
+func (dq *DiseasetypeQuery) sqlQuery() *sql.Selector {
+	builder := sql.Dialect(dq.driver.Dialect())
 	t1 := builder.Table(diseasetype.Table)
 	selector := builder.Select(t1.Columns(diseasetype.Columns...)...).From(t1)
-	if dtq.sql != nil {
-		selector = dtq.sql
+	if dq.sql != nil {
+		selector = dq.sql
 		selector.Select(selector.Columns(diseasetype.Columns...)...)
 	}
-	for _, p := range dtq.predicates {
+	for _, p := range dq.predicates {
 		p(selector)
 	}
-	for _, p := range dtq.order {
+	for _, p := range dq.order {
 		p(selector)
 	}
-	if offset := dtq.offset; offset != nil {
+	if offset := dq.offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := dtq.limit; limit != nil {
+	if limit := dq.limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
 }
 
-// DiseaseTypeGroupBy is the builder for group-by DiseaseType entities.
-type DiseaseTypeGroupBy struct {
+// DiseasetypeGroupBy is the builder for group-by Diseasetype entities.
+type DiseasetypeGroupBy struct {
 	config
 	fields []string
 	fns    []AggregateFunc
@@ -471,43 +471,43 @@ type DiseaseTypeGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (dtgb *DiseaseTypeGroupBy) Aggregate(fns ...AggregateFunc) *DiseaseTypeGroupBy {
-	dtgb.fns = append(dtgb.fns, fns...)
-	return dtgb
+func (dgb *DiseasetypeGroupBy) Aggregate(fns ...AggregateFunc) *DiseasetypeGroupBy {
+	dgb.fns = append(dgb.fns, fns...)
+	return dgb
 }
 
 // Scan applies the group-by query and scan the result into the given value.
-func (dtgb *DiseaseTypeGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := dtgb.path(ctx)
+func (dgb *DiseasetypeGroupBy) Scan(ctx context.Context, v interface{}) error {
+	query, err := dgb.path(ctx)
 	if err != nil {
 		return err
 	}
-	dtgb.sql = query
-	return dtgb.sqlScan(ctx, v)
+	dgb.sql = query
+	return dgb.sqlScan(ctx, v)
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) ScanX(ctx context.Context, v interface{}) {
-	if err := dtgb.Scan(ctx, v); err != nil {
+func (dgb *DiseasetypeGroupBy) ScanX(ctx context.Context, v interface{}) {
+	if err := dgb.Scan(ctx, v); err != nil {
 		panic(err)
 	}
 }
 
 // Strings returns list of strings from group-by. It is only allowed when querying group-by with one field.
-func (dtgb *DiseaseTypeGroupBy) Strings(ctx context.Context) ([]string, error) {
-	if len(dtgb.fields) > 1 {
-		return nil, errors.New("ent: DiseaseTypeGroupBy.Strings is not achievable when grouping more than 1 field")
+func (dgb *DiseasetypeGroupBy) Strings(ctx context.Context) ([]string, error) {
+	if len(dgb.fields) > 1 {
+		return nil, errors.New("ent: DiseasetypeGroupBy.Strings is not achievable when grouping more than 1 field")
 	}
 	var v []string
-	if err := dtgb.Scan(ctx, &v); err != nil {
+	if err := dgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // StringsX is like Strings, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) StringsX(ctx context.Context) []string {
-	v, err := dtgb.Strings(ctx)
+func (dgb *DiseasetypeGroupBy) StringsX(ctx context.Context) []string {
+	v, err := dgb.Strings(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -515,9 +515,9 @@ func (dtgb *DiseaseTypeGroupBy) StringsX(ctx context.Context) []string {
 }
 
 // String returns a single string from group-by. It is only allowed when querying group-by with one field.
-func (dtgb *DiseaseTypeGroupBy) String(ctx context.Context) (_ string, err error) {
+func (dgb *DiseasetypeGroupBy) String(ctx context.Context) (_ string, err error) {
 	var v []string
-	if v, err = dtgb.Strings(ctx); err != nil {
+	if v, err = dgb.Strings(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -526,14 +526,14 @@ func (dtgb *DiseaseTypeGroupBy) String(ctx context.Context) (_ string, err error
 	case 0:
 		err = &NotFoundError{diseasetype.Label}
 	default:
-		err = fmt.Errorf("ent: DiseaseTypeGroupBy.Strings returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DiseasetypeGroupBy.Strings returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // StringX is like String, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) StringX(ctx context.Context) string {
-	v, err := dtgb.String(ctx)
+func (dgb *DiseasetypeGroupBy) StringX(ctx context.Context) string {
+	v, err := dgb.String(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -541,20 +541,20 @@ func (dtgb *DiseaseTypeGroupBy) StringX(ctx context.Context) string {
 }
 
 // Ints returns list of ints from group-by. It is only allowed when querying group-by with one field.
-func (dtgb *DiseaseTypeGroupBy) Ints(ctx context.Context) ([]int, error) {
-	if len(dtgb.fields) > 1 {
-		return nil, errors.New("ent: DiseaseTypeGroupBy.Ints is not achievable when grouping more than 1 field")
+func (dgb *DiseasetypeGroupBy) Ints(ctx context.Context) ([]int, error) {
+	if len(dgb.fields) > 1 {
+		return nil, errors.New("ent: DiseasetypeGroupBy.Ints is not achievable when grouping more than 1 field")
 	}
 	var v []int
-	if err := dtgb.Scan(ctx, &v); err != nil {
+	if err := dgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // IntsX is like Ints, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) IntsX(ctx context.Context) []int {
-	v, err := dtgb.Ints(ctx)
+func (dgb *DiseasetypeGroupBy) IntsX(ctx context.Context) []int {
+	v, err := dgb.Ints(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -562,9 +562,9 @@ func (dtgb *DiseaseTypeGroupBy) IntsX(ctx context.Context) []int {
 }
 
 // Int returns a single int from group-by. It is only allowed when querying group-by with one field.
-func (dtgb *DiseaseTypeGroupBy) Int(ctx context.Context) (_ int, err error) {
+func (dgb *DiseasetypeGroupBy) Int(ctx context.Context) (_ int, err error) {
 	var v []int
-	if v, err = dtgb.Ints(ctx); err != nil {
+	if v, err = dgb.Ints(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -573,14 +573,14 @@ func (dtgb *DiseaseTypeGroupBy) Int(ctx context.Context) (_ int, err error) {
 	case 0:
 		err = &NotFoundError{diseasetype.Label}
 	default:
-		err = fmt.Errorf("ent: DiseaseTypeGroupBy.Ints returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DiseasetypeGroupBy.Ints returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // IntX is like Int, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) IntX(ctx context.Context) int {
-	v, err := dtgb.Int(ctx)
+func (dgb *DiseasetypeGroupBy) IntX(ctx context.Context) int {
+	v, err := dgb.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -588,20 +588,20 @@ func (dtgb *DiseaseTypeGroupBy) IntX(ctx context.Context) int {
 }
 
 // Float64s returns list of float64s from group-by. It is only allowed when querying group-by with one field.
-func (dtgb *DiseaseTypeGroupBy) Float64s(ctx context.Context) ([]float64, error) {
-	if len(dtgb.fields) > 1 {
-		return nil, errors.New("ent: DiseaseTypeGroupBy.Float64s is not achievable when grouping more than 1 field")
+func (dgb *DiseasetypeGroupBy) Float64s(ctx context.Context) ([]float64, error) {
+	if len(dgb.fields) > 1 {
+		return nil, errors.New("ent: DiseasetypeGroupBy.Float64s is not achievable when grouping more than 1 field")
 	}
 	var v []float64
-	if err := dtgb.Scan(ctx, &v); err != nil {
+	if err := dgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // Float64sX is like Float64s, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) Float64sX(ctx context.Context) []float64 {
-	v, err := dtgb.Float64s(ctx)
+func (dgb *DiseasetypeGroupBy) Float64sX(ctx context.Context) []float64 {
+	v, err := dgb.Float64s(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -609,9 +609,9 @@ func (dtgb *DiseaseTypeGroupBy) Float64sX(ctx context.Context) []float64 {
 }
 
 // Float64 returns a single float64 from group-by. It is only allowed when querying group-by with one field.
-func (dtgb *DiseaseTypeGroupBy) Float64(ctx context.Context) (_ float64, err error) {
+func (dgb *DiseasetypeGroupBy) Float64(ctx context.Context) (_ float64, err error) {
 	var v []float64
-	if v, err = dtgb.Float64s(ctx); err != nil {
+	if v, err = dgb.Float64s(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -620,14 +620,14 @@ func (dtgb *DiseaseTypeGroupBy) Float64(ctx context.Context) (_ float64, err err
 	case 0:
 		err = &NotFoundError{diseasetype.Label}
 	default:
-		err = fmt.Errorf("ent: DiseaseTypeGroupBy.Float64s returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DiseasetypeGroupBy.Float64s returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // Float64X is like Float64, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) Float64X(ctx context.Context) float64 {
-	v, err := dtgb.Float64(ctx)
+func (dgb *DiseasetypeGroupBy) Float64X(ctx context.Context) float64 {
+	v, err := dgb.Float64(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -635,20 +635,20 @@ func (dtgb *DiseaseTypeGroupBy) Float64X(ctx context.Context) float64 {
 }
 
 // Bools returns list of bools from group-by. It is only allowed when querying group-by with one field.
-func (dtgb *DiseaseTypeGroupBy) Bools(ctx context.Context) ([]bool, error) {
-	if len(dtgb.fields) > 1 {
-		return nil, errors.New("ent: DiseaseTypeGroupBy.Bools is not achievable when grouping more than 1 field")
+func (dgb *DiseasetypeGroupBy) Bools(ctx context.Context) ([]bool, error) {
+	if len(dgb.fields) > 1 {
+		return nil, errors.New("ent: DiseasetypeGroupBy.Bools is not achievable when grouping more than 1 field")
 	}
 	var v []bool
-	if err := dtgb.Scan(ctx, &v); err != nil {
+	if err := dgb.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // BoolsX is like Bools, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) BoolsX(ctx context.Context) []bool {
-	v, err := dtgb.Bools(ctx)
+func (dgb *DiseasetypeGroupBy) BoolsX(ctx context.Context) []bool {
+	v, err := dgb.Bools(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -656,9 +656,9 @@ func (dtgb *DiseaseTypeGroupBy) BoolsX(ctx context.Context) []bool {
 }
 
 // Bool returns a single bool from group-by. It is only allowed when querying group-by with one field.
-func (dtgb *DiseaseTypeGroupBy) Bool(ctx context.Context) (_ bool, err error) {
+func (dgb *DiseasetypeGroupBy) Bool(ctx context.Context) (_ bool, err error) {
 	var v []bool
-	if v, err = dtgb.Bools(ctx); err != nil {
+	if v, err = dgb.Bools(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -667,42 +667,42 @@ func (dtgb *DiseaseTypeGroupBy) Bool(ctx context.Context) (_ bool, err error) {
 	case 0:
 		err = &NotFoundError{diseasetype.Label}
 	default:
-		err = fmt.Errorf("ent: DiseaseTypeGroupBy.Bools returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DiseasetypeGroupBy.Bools returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // BoolX is like Bool, but panics if an error occurs.
-func (dtgb *DiseaseTypeGroupBy) BoolX(ctx context.Context) bool {
-	v, err := dtgb.Bool(ctx)
+func (dgb *DiseasetypeGroupBy) BoolX(ctx context.Context) bool {
+	v, err := dgb.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (dtgb *DiseaseTypeGroupBy) sqlScan(ctx context.Context, v interface{}) error {
+func (dgb *DiseasetypeGroupBy) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := dtgb.sqlQuery().Query()
-	if err := dtgb.driver.Query(ctx, query, args, rows); err != nil {
+	query, args := dgb.sqlQuery().Query()
+	if err := dgb.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (dtgb *DiseaseTypeGroupBy) sqlQuery() *sql.Selector {
-	selector := dtgb.sql
-	columns := make([]string, 0, len(dtgb.fields)+len(dtgb.fns))
-	columns = append(columns, dtgb.fields...)
-	for _, fn := range dtgb.fns {
+func (dgb *DiseasetypeGroupBy) sqlQuery() *sql.Selector {
+	selector := dgb.sql
+	columns := make([]string, 0, len(dgb.fields)+len(dgb.fns))
+	columns = append(columns, dgb.fields...)
+	for _, fn := range dgb.fns {
 		columns = append(columns, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(dtgb.fields...)
+	return selector.Select(columns...).GroupBy(dgb.fields...)
 }
 
-// DiseaseTypeSelect is the builder for select fields of DiseaseType entities.
-type DiseaseTypeSelect struct {
+// DiseasetypeSelect is the builder for select fields of Diseasetype entities.
+type DiseasetypeSelect struct {
 	config
 	fields []string
 	// intermediate query (i.e. traversal path).
@@ -711,37 +711,37 @@ type DiseaseTypeSelect struct {
 }
 
 // Scan applies the selector query and scan the result into the given value.
-func (dts *DiseaseTypeSelect) Scan(ctx context.Context, v interface{}) error {
-	query, err := dts.path(ctx)
+func (ds *DiseasetypeSelect) Scan(ctx context.Context, v interface{}) error {
+	query, err := ds.path(ctx)
 	if err != nil {
 		return err
 	}
-	dts.sql = query
-	return dts.sqlScan(ctx, v)
+	ds.sql = query
+	return ds.sqlScan(ctx, v)
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) ScanX(ctx context.Context, v interface{}) {
-	if err := dts.Scan(ctx, v); err != nil {
+func (ds *DiseasetypeSelect) ScanX(ctx context.Context, v interface{}) {
+	if err := ds.Scan(ctx, v); err != nil {
 		panic(err)
 	}
 }
 
 // Strings returns list of strings from selector. It is only allowed when selecting one field.
-func (dts *DiseaseTypeSelect) Strings(ctx context.Context) ([]string, error) {
-	if len(dts.fields) > 1 {
-		return nil, errors.New("ent: DiseaseTypeSelect.Strings is not achievable when selecting more than 1 field")
+func (ds *DiseasetypeSelect) Strings(ctx context.Context) ([]string, error) {
+	if len(ds.fields) > 1 {
+		return nil, errors.New("ent: DiseasetypeSelect.Strings is not achievable when selecting more than 1 field")
 	}
 	var v []string
-	if err := dts.Scan(ctx, &v); err != nil {
+	if err := ds.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // StringsX is like Strings, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) StringsX(ctx context.Context) []string {
-	v, err := dts.Strings(ctx)
+func (ds *DiseasetypeSelect) StringsX(ctx context.Context) []string {
+	v, err := ds.Strings(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -749,9 +749,9 @@ func (dts *DiseaseTypeSelect) StringsX(ctx context.Context) []string {
 }
 
 // String returns a single string from selector. It is only allowed when selecting one field.
-func (dts *DiseaseTypeSelect) String(ctx context.Context) (_ string, err error) {
+func (ds *DiseasetypeSelect) String(ctx context.Context) (_ string, err error) {
 	var v []string
-	if v, err = dts.Strings(ctx); err != nil {
+	if v, err = ds.Strings(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -760,14 +760,14 @@ func (dts *DiseaseTypeSelect) String(ctx context.Context) (_ string, err error) 
 	case 0:
 		err = &NotFoundError{diseasetype.Label}
 	default:
-		err = fmt.Errorf("ent: DiseaseTypeSelect.Strings returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DiseasetypeSelect.Strings returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // StringX is like String, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) StringX(ctx context.Context) string {
-	v, err := dts.String(ctx)
+func (ds *DiseasetypeSelect) StringX(ctx context.Context) string {
+	v, err := ds.String(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -775,20 +775,20 @@ func (dts *DiseaseTypeSelect) StringX(ctx context.Context) string {
 }
 
 // Ints returns list of ints from selector. It is only allowed when selecting one field.
-func (dts *DiseaseTypeSelect) Ints(ctx context.Context) ([]int, error) {
-	if len(dts.fields) > 1 {
-		return nil, errors.New("ent: DiseaseTypeSelect.Ints is not achievable when selecting more than 1 field")
+func (ds *DiseasetypeSelect) Ints(ctx context.Context) ([]int, error) {
+	if len(ds.fields) > 1 {
+		return nil, errors.New("ent: DiseasetypeSelect.Ints is not achievable when selecting more than 1 field")
 	}
 	var v []int
-	if err := dts.Scan(ctx, &v); err != nil {
+	if err := ds.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // IntsX is like Ints, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) IntsX(ctx context.Context) []int {
-	v, err := dts.Ints(ctx)
+func (ds *DiseasetypeSelect) IntsX(ctx context.Context) []int {
+	v, err := ds.Ints(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -796,9 +796,9 @@ func (dts *DiseaseTypeSelect) IntsX(ctx context.Context) []int {
 }
 
 // Int returns a single int from selector. It is only allowed when selecting one field.
-func (dts *DiseaseTypeSelect) Int(ctx context.Context) (_ int, err error) {
+func (ds *DiseasetypeSelect) Int(ctx context.Context) (_ int, err error) {
 	var v []int
-	if v, err = dts.Ints(ctx); err != nil {
+	if v, err = ds.Ints(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -807,14 +807,14 @@ func (dts *DiseaseTypeSelect) Int(ctx context.Context) (_ int, err error) {
 	case 0:
 		err = &NotFoundError{diseasetype.Label}
 	default:
-		err = fmt.Errorf("ent: DiseaseTypeSelect.Ints returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DiseasetypeSelect.Ints returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // IntX is like Int, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) IntX(ctx context.Context) int {
-	v, err := dts.Int(ctx)
+func (ds *DiseasetypeSelect) IntX(ctx context.Context) int {
+	v, err := ds.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -822,20 +822,20 @@ func (dts *DiseaseTypeSelect) IntX(ctx context.Context) int {
 }
 
 // Float64s returns list of float64s from selector. It is only allowed when selecting one field.
-func (dts *DiseaseTypeSelect) Float64s(ctx context.Context) ([]float64, error) {
-	if len(dts.fields) > 1 {
-		return nil, errors.New("ent: DiseaseTypeSelect.Float64s is not achievable when selecting more than 1 field")
+func (ds *DiseasetypeSelect) Float64s(ctx context.Context) ([]float64, error) {
+	if len(ds.fields) > 1 {
+		return nil, errors.New("ent: DiseasetypeSelect.Float64s is not achievable when selecting more than 1 field")
 	}
 	var v []float64
-	if err := dts.Scan(ctx, &v); err != nil {
+	if err := ds.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // Float64sX is like Float64s, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) Float64sX(ctx context.Context) []float64 {
-	v, err := dts.Float64s(ctx)
+func (ds *DiseasetypeSelect) Float64sX(ctx context.Context) []float64 {
+	v, err := ds.Float64s(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -843,9 +843,9 @@ func (dts *DiseaseTypeSelect) Float64sX(ctx context.Context) []float64 {
 }
 
 // Float64 returns a single float64 from selector. It is only allowed when selecting one field.
-func (dts *DiseaseTypeSelect) Float64(ctx context.Context) (_ float64, err error) {
+func (ds *DiseasetypeSelect) Float64(ctx context.Context) (_ float64, err error) {
 	var v []float64
-	if v, err = dts.Float64s(ctx); err != nil {
+	if v, err = ds.Float64s(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -854,14 +854,14 @@ func (dts *DiseaseTypeSelect) Float64(ctx context.Context) (_ float64, err error
 	case 0:
 		err = &NotFoundError{diseasetype.Label}
 	default:
-		err = fmt.Errorf("ent: DiseaseTypeSelect.Float64s returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DiseasetypeSelect.Float64s returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // Float64X is like Float64, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) Float64X(ctx context.Context) float64 {
-	v, err := dts.Float64(ctx)
+func (ds *DiseasetypeSelect) Float64X(ctx context.Context) float64 {
+	v, err := ds.Float64(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -869,20 +869,20 @@ func (dts *DiseaseTypeSelect) Float64X(ctx context.Context) float64 {
 }
 
 // Bools returns list of bools from selector. It is only allowed when selecting one field.
-func (dts *DiseaseTypeSelect) Bools(ctx context.Context) ([]bool, error) {
-	if len(dts.fields) > 1 {
-		return nil, errors.New("ent: DiseaseTypeSelect.Bools is not achievable when selecting more than 1 field")
+func (ds *DiseasetypeSelect) Bools(ctx context.Context) ([]bool, error) {
+	if len(ds.fields) > 1 {
+		return nil, errors.New("ent: DiseasetypeSelect.Bools is not achievable when selecting more than 1 field")
 	}
 	var v []bool
-	if err := dts.Scan(ctx, &v); err != nil {
+	if err := ds.Scan(ctx, &v); err != nil {
 		return nil, err
 	}
 	return v, nil
 }
 
 // BoolsX is like Bools, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) BoolsX(ctx context.Context) []bool {
-	v, err := dts.Bools(ctx)
+func (ds *DiseasetypeSelect) BoolsX(ctx context.Context) []bool {
+	v, err := ds.Bools(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -890,9 +890,9 @@ func (dts *DiseaseTypeSelect) BoolsX(ctx context.Context) []bool {
 }
 
 // Bool returns a single bool from selector. It is only allowed when selecting one field.
-func (dts *DiseaseTypeSelect) Bool(ctx context.Context) (_ bool, err error) {
+func (ds *DiseasetypeSelect) Bool(ctx context.Context) (_ bool, err error) {
 	var v []bool
-	if v, err = dts.Bools(ctx); err != nil {
+	if v, err = ds.Bools(ctx); err != nil {
 		return
 	}
 	switch len(v) {
@@ -901,32 +901,32 @@ func (dts *DiseaseTypeSelect) Bool(ctx context.Context) (_ bool, err error) {
 	case 0:
 		err = &NotFoundError{diseasetype.Label}
 	default:
-		err = fmt.Errorf("ent: DiseaseTypeSelect.Bools returned %d results when one was expected", len(v))
+		err = fmt.Errorf("ent: DiseasetypeSelect.Bools returned %d results when one was expected", len(v))
 	}
 	return
 }
 
 // BoolX is like Bool, but panics if an error occurs.
-func (dts *DiseaseTypeSelect) BoolX(ctx context.Context) bool {
-	v, err := dts.Bool(ctx)
+func (ds *DiseasetypeSelect) BoolX(ctx context.Context) bool {
+	v, err := ds.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (dts *DiseaseTypeSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (ds *DiseasetypeSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := dts.sqlQuery().Query()
-	if err := dts.driver.Query(ctx, query, args, rows); err != nil {
+	query, args := ds.sqlQuery().Query()
+	if err := ds.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (dts *DiseaseTypeSelect) sqlQuery() sql.Querier {
-	selector := dts.sql
-	selector.Select(selector.Columns(dts.fields...)...)
+func (ds *DiseasetypeSelect) sqlQuery() sql.Querier {
+	selector := ds.sql
+	selector.Select(selector.Columns(ds.fields...)...)
 	return selector
 }

@@ -13,70 +13,65 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 )
 
-// DiseaseTypeCreate is the builder for creating a DiseaseType entity.
-type DiseaseTypeCreate struct {
+// DiseasetypeCreate is the builder for creating a Diseasetype entity.
+type DiseasetypeCreate struct {
 	config
-	mutation *DiseaseTypeMutation
+	mutation *DiseasetypeMutation
 	hooks    []Hook
 }
 
-// SetName sets the name field.
-func (dtc *DiseaseTypeCreate) SetName(s string) *DiseaseTypeCreate {
-	dtc.mutation.SetName(s)
-	return dtc
+// SetName sets the Name field.
+func (dc *DiseasetypeCreate) SetName(s string) *DiseasetypeCreate {
+	dc.mutation.SetName(s)
+	return dc
 }
 
 // AddDiseaseIDs adds the disease edge to Disease by ids.
-func (dtc *DiseaseTypeCreate) AddDiseaseIDs(ids ...int) *DiseaseTypeCreate {
-	dtc.mutation.AddDiseaseIDs(ids...)
-	return dtc
+func (dc *DiseasetypeCreate) AddDiseaseIDs(ids ...int) *DiseasetypeCreate {
+	dc.mutation.AddDiseaseIDs(ids...)
+	return dc
 }
 
 // AddDisease adds the disease edges to Disease.
-func (dtc *DiseaseTypeCreate) AddDisease(d ...*Disease) *DiseaseTypeCreate {
+func (dc *DiseasetypeCreate) AddDisease(d ...*Disease) *DiseasetypeCreate {
 	ids := make([]int, len(d))
 	for i := range d {
 		ids[i] = d[i].ID
 	}
-	return dtc.AddDiseaseIDs(ids...)
+	return dc.AddDiseaseIDs(ids...)
 }
 
-// Mutation returns the DiseaseTypeMutation object of the builder.
-func (dtc *DiseaseTypeCreate) Mutation() *DiseaseTypeMutation {
-	return dtc.mutation
+// Mutation returns the DiseasetypeMutation object of the builder.
+func (dc *DiseasetypeCreate) Mutation() *DiseasetypeMutation {
+	return dc.mutation
 }
 
-// Save creates the DiseaseType in the database.
-func (dtc *DiseaseTypeCreate) Save(ctx context.Context) (*DiseaseType, error) {
-	if _, ok := dtc.mutation.Name(); !ok {
-		return nil, &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
-	}
-	if v, ok := dtc.mutation.Name(); ok {
-		if err := diseasetype.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
+// Save creates the Diseasetype in the database.
+func (dc *DiseasetypeCreate) Save(ctx context.Context) (*Diseasetype, error) {
+	if _, ok := dc.mutation.Name(); !ok {
+		return nil, &ValidationError{Name: "Name", err: errors.New("ent: missing required field \"Name\"")}
 	}
 	var (
 		err  error
-		node *DiseaseType
+		node *Diseasetype
 	)
-	if len(dtc.hooks) == 0 {
-		node, err = dtc.sqlSave(ctx)
+	if len(dc.hooks) == 0 {
+		node, err = dc.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*DiseaseTypeMutation)
+			mutation, ok := m.(*DiseasetypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			dtc.mutation = mutation
-			node, err = dtc.sqlSave(ctx)
+			dc.mutation = mutation
+			node, err = dc.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(dtc.hooks) - 1; i >= 0; i-- {
-			mut = dtc.hooks[i](mut)
+		for i := len(dc.hooks) - 1; i >= 0; i-- {
+			mut = dc.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, dtc.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, dc.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -84,30 +79,30 @@ func (dtc *DiseaseTypeCreate) Save(ctx context.Context) (*DiseaseType, error) {
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (dtc *DiseaseTypeCreate) SaveX(ctx context.Context) *DiseaseType {
-	v, err := dtc.Save(ctx)
+func (dc *DiseasetypeCreate) SaveX(ctx context.Context) *Diseasetype {
+	v, err := dc.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return v
 }
 
-func (dtc *DiseaseTypeCreate) sqlSave(ctx context.Context) (*DiseaseType, error) {
-	dt, _spec := dtc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, dtc.driver, _spec); err != nil {
+func (dc *DiseasetypeCreate) sqlSave(ctx context.Context) (*Diseasetype, error) {
+	d, _spec := dc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, dc.driver, _spec); err != nil {
 		if cerr, ok := isSQLConstraintError(err); ok {
 			err = cerr
 		}
 		return nil, err
 	}
 	id := _spec.ID.Value.(int64)
-	dt.ID = int(id)
-	return dt, nil
+	d.ID = int(id)
+	return d, nil
 }
 
-func (dtc *DiseaseTypeCreate) createSpec() (*DiseaseType, *sqlgraph.CreateSpec) {
+func (dc *DiseasetypeCreate) createSpec() (*Diseasetype, *sqlgraph.CreateSpec) {
 	var (
-		dt    = &DiseaseType{config: dtc.config}
+		d     = &Diseasetype{config: dc.config}
 		_spec = &sqlgraph.CreateSpec{
 			Table: diseasetype.Table,
 			ID: &sqlgraph.FieldSpec{
@@ -116,15 +111,15 @@ func (dtc *DiseaseTypeCreate) createSpec() (*DiseaseType, *sqlgraph.CreateSpec) 
 			},
 		}
 	)
-	if value, ok := dtc.mutation.Name(); ok {
+	if value, ok := dc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: diseasetype.FieldName,
 		})
-		dt.Name = value
+		d.Name = value
 	}
-	if nodes := dtc.mutation.DiseaseIDs(); len(nodes) > 0 {
+	if nodes := dc.mutation.DiseaseIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -143,5 +138,5 @@ func (dtc *DiseaseTypeCreate) createSpec() (*DiseaseType, *sqlgraph.CreateSpec) 
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	return dt, _spec
+	return d, _spec
 }

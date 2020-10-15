@@ -29,7 +29,7 @@ type DiseaseQuery struct {
 	// eager-loading edges.
 	withEmployee    *EmployeeQuery
 	withServerity   *SeverityQuery
-	withDiseasetype *DiseaseTypeQuery
+	withDiseasetype *DiseasetypeQuery
 	withFKs         bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -97,8 +97,8 @@ func (dq *DiseaseQuery) QueryServerity() *SeverityQuery {
 }
 
 // QueryDiseasetype chains the current query on the diseasetype edge.
-func (dq *DiseaseQuery) QueryDiseasetype() *DiseaseTypeQuery {
-	query := &DiseaseTypeQuery{config: dq.config}
+func (dq *DiseaseQuery) QueryDiseasetype() *DiseasetypeQuery {
+	query := &DiseasetypeQuery{config: dq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := dq.prepareQuery(ctx); err != nil {
 			return nil, err
@@ -317,8 +317,8 @@ func (dq *DiseaseQuery) WithServerity(opts ...func(*SeverityQuery)) *DiseaseQuer
 
 //  WithDiseasetype tells the query-builder to eager-loads the nodes that are connected to
 // the "diseasetype" edge. The optional arguments used to configure the query builder of the edge.
-func (dq *DiseaseQuery) WithDiseasetype(opts ...func(*DiseaseTypeQuery)) *DiseaseQuery {
-	query := &DiseaseTypeQuery{config: dq.config}
+func (dq *DiseaseQuery) WithDiseasetype(opts ...func(*DiseasetypeQuery)) *DiseaseQuery {
+	query := &DiseasetypeQuery{config: dq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
@@ -332,7 +332,7 @@ func (dq *DiseaseQuery) WithDiseasetype(opts ...func(*DiseaseTypeQuery)) *Diseas
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		Name string `json:"Name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -358,7 +358,7 @@ func (dq *DiseaseQuery) GroupBy(field string, fields ...string) *DiseaseGroupBy 
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		Name string `json:"Name,omitempty"`
 //	}
 //
 //	client.Disease.Query().
@@ -483,7 +483,7 @@ func (dq *DiseaseQuery) sqlAll(ctx context.Context) ([]*Disease, error) {
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Disease)
 		for i := range nodes {
-			if fk := nodes[i].disease_type_disease; fk != nil {
+			if fk := nodes[i].diseasetype_disease; fk != nil {
 				ids = append(ids, *fk)
 				nodeids[*fk] = append(nodeids[*fk], nodes[i])
 			}
@@ -496,7 +496,7 @@ func (dq *DiseaseQuery) sqlAll(ctx context.Context) ([]*Disease, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "disease_type_disease" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "diseasetype_disease" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Diseasetype = n

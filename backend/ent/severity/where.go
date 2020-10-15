@@ -91,28 +91,28 @@ func IDLTE(id int) predicate.Severity {
 	})
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+// Name applies equality check predicate on the "Name" field. It's identical to NameEQ.
 func Name(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
+// NameEQ applies the EQ predicate on the "Name" field.
 func NameEQ(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
+// NameNEQ applies the NEQ predicate on the "Name" field.
 func NameNEQ(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// NameIn applies the In predicate on the "name" field.
+// NameIn applies the In predicate on the "Name" field.
 func NameIn(vs ...string) predicate.Severity {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -129,7 +129,7 @@ func NameIn(vs ...string) predicate.Severity {
 	})
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
+// NameNotIn applies the NotIn predicate on the "Name" field.
 func NameNotIn(vs ...string) predicate.Severity {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -146,63 +146,63 @@ func NameNotIn(vs ...string) predicate.Severity {
 	})
 }
 
-// NameGT applies the GT predicate on the "name" field.
+// NameGT applies the GT predicate on the "Name" field.
 func NameGT(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
+// NameGTE applies the GTE predicate on the "Name" field.
 func NameGTE(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// NameLT applies the LT predicate on the "name" field.
+// NameLT applies the LT predicate on the "Name" field.
 func NameLT(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
+// NameLTE applies the LTE predicate on the "Name" field.
 func NameLTE(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// NameContains applies the Contains predicate on the "name" field.
+// NameContains applies the Contains predicate on the "Name" field.
 func NameContains(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+// NameHasPrefix applies the HasPrefix predicate on the "Name" field.
 func NameHasPrefix(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+// NameHasSuffix applies the HasSuffix predicate on the "Name" field.
 func NameHasSuffix(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// NameEqualFold applies the EqualFold predicate on the "name" field.
+// NameEqualFold applies the EqualFold predicate on the "Name" field.
 func NameEqualFold(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
+// NameContainsFold applies the ContainsFold predicate on the "Name" field.
 func NameContainsFold(v string) predicate.Severity {
 	return predicate.Severity(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldName), v))

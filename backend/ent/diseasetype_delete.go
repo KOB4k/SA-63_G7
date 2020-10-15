@@ -13,43 +13,43 @@ import (
 	"github.com/facebookincubator/ent/schema/field"
 )
 
-// DiseaseTypeDelete is the builder for deleting a DiseaseType entity.
-type DiseaseTypeDelete struct {
+// DiseasetypeDelete is the builder for deleting a Diseasetype entity.
+type DiseasetypeDelete struct {
 	config
 	hooks      []Hook
-	mutation   *DiseaseTypeMutation
-	predicates []predicate.DiseaseType
+	mutation   *DiseasetypeMutation
+	predicates []predicate.Diseasetype
 }
 
 // Where adds a new predicate to the delete builder.
-func (dtd *DiseaseTypeDelete) Where(ps ...predicate.DiseaseType) *DiseaseTypeDelete {
-	dtd.predicates = append(dtd.predicates, ps...)
-	return dtd
+func (dd *DiseasetypeDelete) Where(ps ...predicate.Diseasetype) *DiseasetypeDelete {
+	dd.predicates = append(dd.predicates, ps...)
+	return dd
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (dtd *DiseaseTypeDelete) Exec(ctx context.Context) (int, error) {
+func (dd *DiseasetypeDelete) Exec(ctx context.Context) (int, error) {
 	var (
 		err      error
 		affected int
 	)
-	if len(dtd.hooks) == 0 {
-		affected, err = dtd.sqlExec(ctx)
+	if len(dd.hooks) == 0 {
+		affected, err = dd.sqlExec(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*DiseaseTypeMutation)
+			mutation, ok := m.(*DiseasetypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			dtd.mutation = mutation
-			affected, err = dtd.sqlExec(ctx)
+			dd.mutation = mutation
+			affected, err = dd.sqlExec(ctx)
 			mutation.done = true
 			return affected, err
 		})
-		for i := len(dtd.hooks) - 1; i >= 0; i-- {
-			mut = dtd.hooks[i](mut)
+		for i := len(dd.hooks) - 1; i >= 0; i-- {
+			mut = dd.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, dtd.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, dd.mutation); err != nil {
 			return 0, err
 		}
 	}
@@ -57,15 +57,15 @@ func (dtd *DiseaseTypeDelete) Exec(ctx context.Context) (int, error) {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (dtd *DiseaseTypeDelete) ExecX(ctx context.Context) int {
-	n, err := dtd.Exec(ctx)
+func (dd *DiseasetypeDelete) ExecX(ctx context.Context) int {
+	n, err := dd.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (dtd *DiseaseTypeDelete) sqlExec(ctx context.Context) (int, error) {
+func (dd *DiseasetypeDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := &sqlgraph.DeleteSpec{
 		Node: &sqlgraph.NodeSpec{
 			Table: diseasetype.Table,
@@ -75,24 +75,24 @@ func (dtd *DiseaseTypeDelete) sqlExec(ctx context.Context) (int, error) {
 			},
 		},
 	}
-	if ps := dtd.predicates; len(ps) > 0 {
+	if ps := dd.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	return sqlgraph.DeleteNodes(ctx, dtd.driver, _spec)
+	return sqlgraph.DeleteNodes(ctx, dd.driver, _spec)
 }
 
-// DiseaseTypeDeleteOne is the builder for deleting a single DiseaseType entity.
-type DiseaseTypeDeleteOne struct {
-	dtd *DiseaseTypeDelete
+// DiseasetypeDeleteOne is the builder for deleting a single Diseasetype entity.
+type DiseasetypeDeleteOne struct {
+	dd *DiseasetypeDelete
 }
 
 // Exec executes the deletion query.
-func (dtdo *DiseaseTypeDeleteOne) Exec(ctx context.Context) error {
-	n, err := dtdo.dtd.Exec(ctx)
+func (ddo *DiseasetypeDeleteOne) Exec(ctx context.Context) error {
+	n, err := ddo.dd.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -104,6 +104,6 @@ func (dtdo *DiseaseTypeDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (dtdo *DiseaseTypeDeleteOne) ExecX(ctx context.Context) {
-	dtdo.dtd.ExecX(ctx)
+func (ddo *DiseasetypeDeleteOne) ExecX(ctx context.Context) {
+	ddo.dd.ExecX(ctx)
 }

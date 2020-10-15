@@ -28,9 +28,9 @@ func (eu *EmployeeUpdate) Where(ps ...predicate.Employee) *EmployeeUpdate {
 	return eu
 }
 
-// SetName sets the name field.
-func (eu *EmployeeUpdate) SetName(s string) *EmployeeUpdate {
-	eu.mutation.SetName(s)
+// SetUserID sets the User_id field.
+func (eu *EmployeeUpdate) SetUserID(s string) *EmployeeUpdate {
+	eu.mutation.SetUserID(s)
 	return eu
 }
 
@@ -71,11 +71,6 @@ func (eu *EmployeeUpdate) RemoveDisease(d ...*Disease) *EmployeeUpdate {
 
 // Save executes the query and returns the number of rows/vertices matched by this operation.
 func (eu *EmployeeUpdate) Save(ctx context.Context) (int, error) {
-	if v, ok := eu.mutation.Name(); ok {
-		if err := employee.NameValidator(v); err != nil {
-			return 0, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
-	}
 
 	var (
 		err      error
@@ -144,11 +139,11 @@ func (eu *EmployeeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := eu.mutation.Name(); ok {
+	if value, ok := eu.mutation.UserID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: employee.FieldName,
+			Column: employee.FieldUserID,
 		})
 	}
 	if nodes := eu.mutation.RemovedDiseaseIDs(); len(nodes) > 0 {
@@ -207,9 +202,9 @@ type EmployeeUpdateOne struct {
 	mutation *EmployeeMutation
 }
 
-// SetName sets the name field.
-func (euo *EmployeeUpdateOne) SetName(s string) *EmployeeUpdateOne {
-	euo.mutation.SetName(s)
+// SetUserID sets the User_id field.
+func (euo *EmployeeUpdateOne) SetUserID(s string) *EmployeeUpdateOne {
+	euo.mutation.SetUserID(s)
 	return euo
 }
 
@@ -250,11 +245,6 @@ func (euo *EmployeeUpdateOne) RemoveDisease(d ...*Disease) *EmployeeUpdateOne {
 
 // Save executes the query and returns the updated entity.
 func (euo *EmployeeUpdateOne) Save(ctx context.Context) (*Employee, error) {
-	if v, ok := euo.mutation.Name(); ok {
-		if err := employee.NameValidator(v); err != nil {
-			return nil, &ValidationError{Name: "name", err: fmt.Errorf("ent: validator failed for field \"name\": %w", err)}
-		}
-	}
 
 	var (
 		err  error
@@ -321,11 +311,11 @@ func (euo *EmployeeUpdateOne) sqlSave(ctx context.Context) (e *Employee, err err
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Employee.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := euo.mutation.Name(); ok {
+	if value, ok := euo.mutation.UserID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: employee.FieldName,
+			Column: employee.FieldUserID,
 		})
 	}
 	if nodes := euo.mutation.RemovedDiseaseIDs(); len(nodes) > 0 {

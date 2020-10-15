@@ -10,20 +10,20 @@ import (
 	"github.com/facebookincubator/ent/dialect/sql"
 )
 
-// DiseaseType is the model entity for the DiseaseType schema.
-type DiseaseType struct {
+// Diseasetype is the model entity for the Diseasetype schema.
+type Diseasetype struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Name holds the value of the "name" field.
-	Name string `json:"name,omitempty"`
+	// Name holds the value of the "Name" field.
+	Name string `json:"Name,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the DiseaseTypeQuery when eager-loading is set.
-	Edges DiseaseTypeEdges `json:"edges"`
+	// The values are being populated by the DiseasetypeQuery when eager-loading is set.
+	Edges DiseasetypeEdges `json:"edges"`
 }
 
-// DiseaseTypeEdges holds the relations/edges for other nodes in the graph.
-type DiseaseTypeEdges struct {
+// DiseasetypeEdges holds the relations/edges for other nodes in the graph.
+type DiseasetypeEdges struct {
 	// Disease holds the value of the disease edge.
 	Disease []*Disease
 	// loadedTypes holds the information for reporting if a
@@ -33,7 +33,7 @@ type DiseaseTypeEdges struct {
 
 // DiseaseOrErr returns the Disease value or an error if the edge
 // was not loaded in eager-loading.
-func (e DiseaseTypeEdges) DiseaseOrErr() ([]*Disease, error) {
+func (e DiseasetypeEdges) DiseaseOrErr() ([]*Disease, error) {
 	if e.loadedTypes[0] {
 		return e.Disease, nil
 	}
@@ -41,16 +41,16 @@ func (e DiseaseTypeEdges) DiseaseOrErr() ([]*Disease, error) {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*DiseaseType) scanValues() []interface{} {
+func (*Diseasetype) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},  // id
-		&sql.NullString{}, // name
+		&sql.NullString{}, // Name
 	}
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the DiseaseType fields.
-func (dt *DiseaseType) assignValues(values ...interface{}) error {
+// to the Diseasetype fields.
+func (d *Diseasetype) assignValues(values ...interface{}) error {
 	if m, n := len(values), len(diseasetype.Columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -58,55 +58,55 @@ func (dt *DiseaseType) assignValues(values ...interface{}) error {
 	if !ok {
 		return fmt.Errorf("unexpected type %T for field id", value)
 	}
-	dt.ID = int(value.Int64)
+	d.ID = int(value.Int64)
 	values = values[1:]
 	if value, ok := values[0].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field name", values[0])
+		return fmt.Errorf("unexpected type %T for field Name", values[0])
 	} else if value.Valid {
-		dt.Name = value.String
+		d.Name = value.String
 	}
 	return nil
 }
 
-// QueryDisease queries the disease edge of the DiseaseType.
-func (dt *DiseaseType) QueryDisease() *DiseaseQuery {
-	return (&DiseaseTypeClient{config: dt.config}).QueryDisease(dt)
+// QueryDisease queries the disease edge of the Diseasetype.
+func (d *Diseasetype) QueryDisease() *DiseaseQuery {
+	return (&DiseasetypeClient{config: d.config}).QueryDisease(d)
 }
 
-// Update returns a builder for updating this DiseaseType.
-// Note that, you need to call DiseaseType.Unwrap() before calling this method, if this DiseaseType
+// Update returns a builder for updating this Diseasetype.
+// Note that, you need to call Diseasetype.Unwrap() before calling this method, if this Diseasetype
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (dt *DiseaseType) Update() *DiseaseTypeUpdateOne {
-	return (&DiseaseTypeClient{config: dt.config}).UpdateOne(dt)
+func (d *Diseasetype) Update() *DiseasetypeUpdateOne {
+	return (&DiseasetypeClient{config: d.config}).UpdateOne(d)
 }
 
 // Unwrap unwraps the entity that was returned from a transaction after it was closed,
 // so that all next queries will be executed through the driver which created the transaction.
-func (dt *DiseaseType) Unwrap() *DiseaseType {
-	tx, ok := dt.config.driver.(*txDriver)
+func (d *Diseasetype) Unwrap() *Diseasetype {
+	tx, ok := d.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: DiseaseType is not a transactional entity")
+		panic("ent: Diseasetype is not a transactional entity")
 	}
-	dt.config.driver = tx.drv
-	return dt
+	d.config.driver = tx.drv
+	return d
 }
 
 // String implements the fmt.Stringer.
-func (dt *DiseaseType) String() string {
+func (d *Diseasetype) String() string {
 	var builder strings.Builder
-	builder.WriteString("DiseaseType(")
-	builder.WriteString(fmt.Sprintf("id=%v", dt.ID))
-	builder.WriteString(", name=")
-	builder.WriteString(dt.Name)
+	builder.WriteString("Diseasetype(")
+	builder.WriteString(fmt.Sprintf("id=%v", d.ID))
+	builder.WriteString(", Name=")
+	builder.WriteString(d.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// DiseaseTypes is a parsable slice of DiseaseType.
-type DiseaseTypes []*DiseaseType
+// Diseasetypes is a parsable slice of Diseasetype.
+type Diseasetypes []*Diseasetype
 
-func (dt DiseaseTypes) config(cfg config) {
-	for _i := range dt {
-		dt[_i].config = cfg
+func (d Diseasetypes) config(cfg config) {
+	for _i := range d {
+		d[_i].config = cfg
 	}
 }

@@ -22,15 +22,15 @@ func (f DiseaseFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, err
 	return f(ctx, mv)
 }
 
-// The DiseaseTypeFunc type is an adapter to allow the use of ordinary
-// function as DiseaseType mutator.
-type DiseaseTypeFunc func(context.Context, *ent.DiseaseTypeMutation) (ent.Value, error)
+// The DiseasetypeFunc type is an adapter to allow the use of ordinary
+// function as Diseasetype mutator.
+type DiseasetypeFunc func(context.Context, *ent.DiseasetypeMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f DiseaseTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.DiseaseTypeMutation)
+func (f DiseasetypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.DiseasetypeMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DiseaseTypeMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DiseasetypeMutation", m)
 	}
 	return f(ctx, mv)
 }

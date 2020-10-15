@@ -9,7 +9,7 @@ import (
 	
 )
 
-
+// Employee schema
 type Employee struct {
 	ent.Schema
 }
@@ -17,7 +17,7 @@ type Employee struct {
 //Fields of the employee
 func (Employee) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("name").NotEmpty(),
+		field.String("User_id"),
 
 	}
 }
@@ -26,5 +26,6 @@ func (Employee) Fields() []ent.Field {
 func (Employee) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("disease", Disease.Type),
+
 	}
 }
