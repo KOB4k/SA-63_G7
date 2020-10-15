@@ -2,7 +2,8 @@ import React, { FC, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Swal from 'sweetalert2'; // alert
+import Link from '@material-ui/core/Link';
+import Swal from 'sweetalert2'; // alert Function
 import {
   AppBar,
   Toolbar,
@@ -58,11 +59,16 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     textAlign: 'center'
-  } ,
+  },
+  logoutButton: {
+    marginLeft: 10,
+    marginRight: 10,
+    color: 'white'
+  },
 
 }));
 
-import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command
+import { DefaultApi } from '../../api/apis'; // Api Gennerate From Command //npx @openapitools/openapi-generator-cli@1.0.15-4.3.1...
 import { EntEmployee } from '../../api/models/EntEmployee'; //import interface Employee
 import { EntDiseasetype } from '../../api/models/EntDiseasetype'; //import interface Diseasetype
 import { EntSeverity } from '../../api/models/EntSeverity'; //import interface Severity
@@ -138,14 +144,15 @@ const Disease: FC<{}> = () => {
     setShowInputError(false);
   }
 
-  // function save data
+  // function save data 
   function save() {
+
     setShowInputError(true)
     let { name, symptom, contagion } = disease;
     if (!name || !symptom || !contagion) {
       Toast.fire({
         icon: 'error',
-        title: 'กรอกให้ครบด้วยนะจ๊ะ',
+        title: 'กรุณากรอกข้อมูลให้ครบถ้วน',
       });
       return;
     }
@@ -178,6 +185,12 @@ const Disease: FC<{}> = () => {
       })
   }
 
+  //Java 
+  function redirecLogOut() {
+    //redirec Page ... http://localhost:3000/
+    window.location.href = "http://localhost:3000/";
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -185,7 +198,7 @@ const Disease: FC<{}> = () => {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h4" className={classes.title}>
             ระบบจัดการโรคติดต่อ
           </Typography>
           <div>
@@ -196,6 +209,11 @@ const Disease: FC<{}> = () => {
               color="inherit"
             >
               <AccountCircle />
+              <Typography>
+                <Link variant="h6" onClick={redirecLogOut} className={classes.logoutButton}>
+                  LOGOUT
+                </Link>
+              </Typography>
             </IconButton>
           </div>
         </Toolbar>
@@ -205,7 +223,7 @@ const Disease: FC<{}> = () => {
         <Grid container spacing={3}>
 
           <Grid item xs={10}>
-          <h2 style={{textAlign: 'center'}}> เพิ่มข้อมูลโรคติดต่อ </h2>
+            <h2 style={{ textAlign: 'center' }}> เพิ่มข้อมูลโรคติดต่อ </h2>
           </Grid>
 
 
@@ -328,7 +346,7 @@ const Disease: FC<{}> = () => {
             >
               บันทึกข้อมูล
               </Button>
-          </Grid> 
+          </Grid>
         </Grid>
       </Container>
     </div>
