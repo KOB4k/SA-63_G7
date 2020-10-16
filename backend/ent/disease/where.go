@@ -473,25 +473,25 @@ func HasEmployeeWith(preds ...predicate.Employee) predicate.Disease {
 	})
 }
 
-// HasServerity applies the HasEdge predicate on the "serverity" edge.
-func HasServerity() predicate.Disease {
+// HasSeverity applies the HasEdge predicate on the "severity" edge.
+func HasSeverity() predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(ServerityTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, ServerityTable, ServerityColumn),
+			sqlgraph.To(SeverityTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, SeverityTable, SeverityColumn),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
 
-// HasServerityWith applies the HasEdge predicate on the "serverity" edge with a given conditions (other predicates).
-func HasServerityWith(preds ...predicate.Severity) predicate.Disease {
+// HasSeverityWith applies the HasEdge predicate on the "severity" edge with a given conditions (other predicates).
+func HasSeverityWith(preds ...predicate.Severity) predicate.Disease {
 	return predicate.Disease(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(ServerityInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, ServerityTable, ServerityColumn),
+			sqlgraph.To(SeverityInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, SeverityTable, SeverityColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

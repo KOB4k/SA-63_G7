@@ -67,23 +67,23 @@ func (du *DiseaseUpdate) SetEmployee(e *Employee) *DiseaseUpdate {
 	return du.SetEmployeeID(e.ID)
 }
 
-// SetServerityID sets the serverity edge to Severity by id.
-func (du *DiseaseUpdate) SetServerityID(id int) *DiseaseUpdate {
-	du.mutation.SetServerityID(id)
+// SetSeverityID sets the severity edge to Severity by id.
+func (du *DiseaseUpdate) SetSeverityID(id int) *DiseaseUpdate {
+	du.mutation.SetSeverityID(id)
 	return du
 }
 
-// SetNillableServerityID sets the serverity edge to Severity by id if the given value is not nil.
-func (du *DiseaseUpdate) SetNillableServerityID(id *int) *DiseaseUpdate {
+// SetNillableSeverityID sets the severity edge to Severity by id if the given value is not nil.
+func (du *DiseaseUpdate) SetNillableSeverityID(id *int) *DiseaseUpdate {
 	if id != nil {
-		du = du.SetServerityID(*id)
+		du = du.SetSeverityID(*id)
 	}
 	return du
 }
 
-// SetServerity sets the serverity edge to Severity.
-func (du *DiseaseUpdate) SetServerity(s *Severity) *DiseaseUpdate {
-	return du.SetServerityID(s.ID)
+// SetSeverity sets the severity edge to Severity.
+func (du *DiseaseUpdate) SetSeverity(s *Severity) *DiseaseUpdate {
+	return du.SetSeverityID(s.ID)
 }
 
 // SetDiseasetypeID sets the diseasetype edge to Diseasetype by id.
@@ -116,9 +116,9 @@ func (du *DiseaseUpdate) ClearEmployee() *DiseaseUpdate {
 	return du
 }
 
-// ClearServerity clears the serverity edge to Severity.
-func (du *DiseaseUpdate) ClearServerity() *DiseaseUpdate {
-	du.mutation.ClearServerity()
+// ClearSeverity clears the severity edge to Severity.
+func (du *DiseaseUpdate) ClearSeverity() *DiseaseUpdate {
+	du.mutation.ClearSeverity()
 	return du
 }
 
@@ -254,12 +254,12 @@ func (du *DiseaseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if du.mutation.ServerityCleared() {
+	if du.mutation.SeverityCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   disease.ServerityTable,
-			Columns: []string{disease.ServerityColumn},
+			Table:   disease.SeverityTable,
+			Columns: []string{disease.SeverityColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -270,12 +270,12 @@ func (du *DiseaseUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := du.mutation.ServerityIDs(); len(nodes) > 0 {
+	if nodes := du.mutation.SeverityIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   disease.ServerityTable,
-			Columns: []string{disease.ServerityColumn},
+			Table:   disease.SeverityTable,
+			Columns: []string{disease.SeverityColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -379,23 +379,23 @@ func (duo *DiseaseUpdateOne) SetEmployee(e *Employee) *DiseaseUpdateOne {
 	return duo.SetEmployeeID(e.ID)
 }
 
-// SetServerityID sets the serverity edge to Severity by id.
-func (duo *DiseaseUpdateOne) SetServerityID(id int) *DiseaseUpdateOne {
-	duo.mutation.SetServerityID(id)
+// SetSeverityID sets the severity edge to Severity by id.
+func (duo *DiseaseUpdateOne) SetSeverityID(id int) *DiseaseUpdateOne {
+	duo.mutation.SetSeverityID(id)
 	return duo
 }
 
-// SetNillableServerityID sets the serverity edge to Severity by id if the given value is not nil.
-func (duo *DiseaseUpdateOne) SetNillableServerityID(id *int) *DiseaseUpdateOne {
+// SetNillableSeverityID sets the severity edge to Severity by id if the given value is not nil.
+func (duo *DiseaseUpdateOne) SetNillableSeverityID(id *int) *DiseaseUpdateOne {
 	if id != nil {
-		duo = duo.SetServerityID(*id)
+		duo = duo.SetSeverityID(*id)
 	}
 	return duo
 }
 
-// SetServerity sets the serverity edge to Severity.
-func (duo *DiseaseUpdateOne) SetServerity(s *Severity) *DiseaseUpdateOne {
-	return duo.SetServerityID(s.ID)
+// SetSeverity sets the severity edge to Severity.
+func (duo *DiseaseUpdateOne) SetSeverity(s *Severity) *DiseaseUpdateOne {
+	return duo.SetSeverityID(s.ID)
 }
 
 // SetDiseasetypeID sets the diseasetype edge to Diseasetype by id.
@@ -428,9 +428,9 @@ func (duo *DiseaseUpdateOne) ClearEmployee() *DiseaseUpdateOne {
 	return duo
 }
 
-// ClearServerity clears the serverity edge to Severity.
-func (duo *DiseaseUpdateOne) ClearServerity() *DiseaseUpdateOne {
-	duo.mutation.ClearServerity()
+// ClearSeverity clears the severity edge to Severity.
+func (duo *DiseaseUpdateOne) ClearSeverity() *DiseaseUpdateOne {
+	duo.mutation.ClearSeverity()
 	return duo
 }
 
@@ -564,12 +564,12 @@ func (duo *DiseaseUpdateOne) sqlSave(ctx context.Context) (d *Disease, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if duo.mutation.ServerityCleared() {
+	if duo.mutation.SeverityCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   disease.ServerityTable,
-			Columns: []string{disease.ServerityColumn},
+			Table:   disease.SeverityTable,
+			Columns: []string{disease.SeverityColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -580,12 +580,12 @@ func (duo *DiseaseUpdateOne) sqlSave(ctx context.Context) (d *Disease, err error
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := duo.mutation.ServerityIDs(); len(nodes) > 0 {
+	if nodes := duo.mutation.SeverityIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   disease.ServerityTable,
-			Columns: []string{disease.ServerityColumn},
+			Table:   disease.SeverityTable,
+			Columns: []string{disease.SeverityColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

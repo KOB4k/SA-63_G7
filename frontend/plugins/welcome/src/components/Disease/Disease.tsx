@@ -128,7 +128,7 @@ const Disease: FC<{}> = () => {
     getDiseasetype();
   }, []);
 
-  // set data to object patient
+  // set data to object disease
   const handleChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>,
   ) => {

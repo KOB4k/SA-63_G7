@@ -31,9 +31,9 @@ definitions:
         $ref: '#/definitions/ent.Employee'
         description: Employee holds the value of the employee edge.
         type: object
-      serverity:
+      severity:
         $ref: '#/definitions/ent.Severity'
-        description: Serverity holds the value of the serverity edge.
+        description: Severity holds the value of the severity edge.
         type: object
     type: object
   ent.Diseasetype:

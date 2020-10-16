@@ -88,7 +88,7 @@ func (ctl *DiseaseController) CreateDisease(c *gin.Context) {
 		SetContagion(obj.Contagion).
 		SetEmployee(e).
 		SetDiseasetype(dt).
-		SetServerity(s).
+		SetSeverity(s).
 		Save(context.Background())
 
 	if err != nil {
@@ -133,7 +133,7 @@ func (ctl *DiseaseController) ListDisease(c *gin.Context) {
 	diseases, err := ctl.client.Disease.
 		Query().
 		WithDiseasetype().
-		WithServerity().
+		WithSeverity().
 		WithEmployee().
 		Limit(limit).
 		Offset(offset).

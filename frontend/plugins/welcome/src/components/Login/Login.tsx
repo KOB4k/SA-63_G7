@@ -94,7 +94,7 @@ const Login: FC<{}> = () => {
       });
       //redirec Page ... http://localhost:3000/Disease
       window.location.href = "http://localhost:3000/Disease";
-      console.log("LOGIN TO Disease");
+      console.log("LOGIN TO DISEASE");
     } else {
       Toast.fire({
         icon: 'error',

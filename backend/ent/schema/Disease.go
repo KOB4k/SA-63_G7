@@ -25,7 +25,7 @@ func (Disease) Edges() []ent.Edge {
 	return []ent.Edge{
 
 		edge.From("employee", Employee.Type).Ref("disease").Unique(),
-		edge.From("serverity", Severity.Type).Ref("disease").Unique(),
+		edge.From("severity", Severity.Type).Ref("disease").Unique(),
 		edge.From("diseasetype", Diseasetype.Type).Ref("disease").Unique(),
 	}
 }

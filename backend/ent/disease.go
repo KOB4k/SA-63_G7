@@ -36,8 +36,8 @@ type Disease struct {
 type DiseaseEdges struct {
 	// Employee holds the value of the employee edge.
 	Employee *Employee
-	// Serverity holds the value of the serverity edge.
-	Serverity *Severity
+	// Severity holds the value of the severity edge.
+	Severity *Severity
 	// Diseasetype holds the value of the diseasetype edge.
 	Diseasetype *Diseasetype
 	// loadedTypes holds the information for reporting if a
@@ -59,18 +59,18 @@ func (e DiseaseEdges) EmployeeOrErr() (*Employee, error) {
 	return nil, &NotLoadedError{edge: "employee"}
 }
 
-// ServerityOrErr returns the Serverity value or an error if the edge
+// SeverityOrErr returns the Severity value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e DiseaseEdges) ServerityOrErr() (*Severity, error) {
+func (e DiseaseEdges) SeverityOrErr() (*Severity, error) {
 	if e.loadedTypes[1] {
-		if e.Serverity == nil {
-			// The edge serverity was loaded in eager-loading,
+		if e.Severity == nil {
+			// The edge severity was loaded in eager-loading,
 			// but was not found.
 			return nil, &NotFoundError{label: severity.Label}
 		}
-		return e.Serverity, nil
+		return e.Severity, nil
 	}
-	return nil, &NotLoadedError{edge: "serverity"}
+	return nil, &NotLoadedError{edge: "severity"}
 }
 
 // DiseasetypeOrErr returns the Diseasetype value or an error if the edge
@@ -162,9 +162,9 @@ func (d *Disease) QueryEmployee() *EmployeeQuery {
 	return (&DiseaseClient{config: d.config}).QueryEmployee(d)
 }
 
-// QueryServerity queries the serverity edge of the Disease.
-func (d *Disease) QueryServerity() *SeverityQuery {
-	return (&DiseaseClient{config: d.config}).QueryServerity(d)
+// QuerySeverity queries the severity edge of the Disease.
+func (d *Disease) QuerySeverity() *SeverityQuery {
+	return (&DiseaseClient{config: d.config}).QuerySeverity(d)
 }
 
 // QueryDiseasetype queries the diseasetype edge of the Disease.

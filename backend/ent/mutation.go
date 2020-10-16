@@ -43,8 +43,8 @@ type DiseaseMutation struct {
 	clearedFields      map[string]struct{}
 	employee           *int
 	clearedemployee    bool
-	serverity          *int
-	clearedserverity   bool
+	severity           *int
+	clearedseverity    bool
 	diseasetype        *int
 	cleareddiseasetype bool
 	done               bool
@@ -280,43 +280,43 @@ func (m *DiseaseMutation) ResetEmployee() {
 	m.clearedemployee = false
 }
 
-// SetServerityID sets the serverity edge to Severity by id.
-func (m *DiseaseMutation) SetServerityID(id int) {
-	m.serverity = &id
+// SetSeverityID sets the severity edge to Severity by id.
+func (m *DiseaseMutation) SetSeverityID(id int) {
+	m.severity = &id
 }
 
-// ClearServerity clears the serverity edge to Severity.
-func (m *DiseaseMutation) ClearServerity() {
-	m.clearedserverity = true
+// ClearSeverity clears the severity edge to Severity.
+func (m *DiseaseMutation) ClearSeverity() {
+	m.clearedseverity = true
 }
 
-// ServerityCleared returns if the edge serverity was cleared.
-func (m *DiseaseMutation) ServerityCleared() bool {
-	return m.clearedserverity
+// SeverityCleared returns if the edge severity was cleared.
+func (m *DiseaseMutation) SeverityCleared() bool {
+	return m.clearedseverity
 }
 
-// ServerityID returns the serverity id in the mutation.
-func (m *DiseaseMutation) ServerityID() (id int, exists bool) {
-	if m.serverity != nil {
-		return *m.serverity, true
+// SeverityID returns the severity id in the mutation.
+func (m *DiseaseMutation) SeverityID() (id int, exists bool) {
+	if m.severity != nil {
+		return *m.severity, true
 	}
 	return
 }
 
-// ServerityIDs returns the serverity ids in the mutation.
+// SeverityIDs returns the severity ids in the mutation.
 // Note that ids always returns len(ids) <= 1 for unique edges, and you should use
-// ServerityID instead. It exists only for internal usage by the builders.
-func (m *DiseaseMutation) ServerityIDs() (ids []int) {
-	if id := m.serverity; id != nil {
+// SeverityID instead. It exists only for internal usage by the builders.
+func (m *DiseaseMutation) SeverityIDs() (ids []int) {
+	if id := m.severity; id != nil {
 		ids = append(ids, *id)
 	}
 	return
 }
 
-// ResetServerity reset all changes of the "serverity" edge.
-func (m *DiseaseMutation) ResetServerity() {
-	m.serverity = nil
-	m.clearedserverity = false
+// ResetSeverity reset all changes of the "severity" edge.
+func (m *DiseaseMutation) ResetSeverity() {
+	m.severity = nil
+	m.clearedseverity = false
 }
 
 // SetDiseasetypeID sets the diseasetype edge to Diseasetype by id.
@@ -511,8 +511,8 @@ func (m *DiseaseMutation) AddedEdges() []string {
 	if m.employee != nil {
 		edges = append(edges, disease.EdgeEmployee)
 	}
-	if m.serverity != nil {
-		edges = append(edges, disease.EdgeServerity)
+	if m.severity != nil {
+		edges = append(edges, disease.EdgeSeverity)
 	}
 	if m.diseasetype != nil {
 		edges = append(edges, disease.EdgeDiseasetype)
@@ -528,8 +528,8 @@ func (m *DiseaseMutation) AddedIDs(name string) []ent.Value {
 		if id := m.employee; id != nil {
 			return []ent.Value{*id}
 		}
-	case disease.EdgeServerity:
-		if id := m.serverity; id != nil {
+	case disease.EdgeSeverity:
+		if id := m.severity; id != nil {
 			return []ent.Value{*id}
 		}
 	case disease.EdgeDiseasetype:
@@ -562,8 +562,8 @@ func (m *DiseaseMutation) ClearedEdges() []string {
 	if m.clearedemployee {
 		edges = append(edges, disease.EdgeEmployee)
 	}
-	if m.clearedserverity {
-		edges = append(edges, disease.EdgeServerity)
+	if m.clearedseverity {
+		edges = append(edges, disease.EdgeSeverity)
 	}
 	if m.cleareddiseasetype {
 		edges = append(edges, disease.EdgeDiseasetype)
@@ -577,8 +577,8 @@ func (m *DiseaseMutation) EdgeCleared(name string) bool {
 	switch name {
 	case disease.EdgeEmployee:
 		return m.clearedemployee
-	case disease.EdgeServerity:
-		return m.clearedserverity
+	case disease.EdgeSeverity:
+		return m.clearedseverity
 	case disease.EdgeDiseasetype:
 		return m.cleareddiseasetype
 	}
@@ -592,8 +592,8 @@ func (m *DiseaseMutation) ClearEdge(name string) error {
 	case disease.EdgeEmployee:
 		m.ClearEmployee()
 		return nil
-	case disease.EdgeServerity:
-		m.ClearServerity()
+	case disease.EdgeSeverity:
+		m.ClearSeverity()
 		return nil
 	case disease.EdgeDiseasetype:
 		m.ClearDiseasetype()
@@ -610,8 +610,8 @@ func (m *DiseaseMutation) ResetEdge(name string) error {
 	case disease.EdgeEmployee:
 		m.ResetEmployee()
 		return nil
-	case disease.EdgeServerity:
-		m.ResetServerity()
+	case disease.EdgeSeverity:
+		m.ResetSeverity()
 		return nil
 	case disease.EdgeDiseasetype:
 		m.ResetDiseasetype()

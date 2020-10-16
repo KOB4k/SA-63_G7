@@ -232,15 +232,15 @@ func (c *DiseaseClient) QueryEmployee(d *Disease) *EmployeeQuery {
 	return query
 }
 
-// QueryServerity queries the serverity edge of a Disease.
-func (c *DiseaseClient) QueryServerity(d *Disease) *SeverityQuery {
+// QuerySeverity queries the severity edge of a Disease.
+func (c *DiseaseClient) QuerySeverity(d *Disease) *SeverityQuery {
 	query := &SeverityQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
 		id := d.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(disease.Table, disease.FieldID, id),
 			sqlgraph.To(severity.Table, severity.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, disease.ServerityTable, disease.ServerityColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, disease.SeverityTable, disease.SeverityColumn),
 		)
 		fromV = sqlgraph.Neighbors(d.driver.Dialect(), step)
 		return fromV, nil

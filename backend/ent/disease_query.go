@@ -28,7 +28,7 @@ type DiseaseQuery struct {
 	predicates []predicate.Disease
 	// eager-loading edges.
 	withEmployee    *EmployeeQuery
-	withServerity   *SeverityQuery
+	withSeverity    *SeverityQuery
 	withDiseasetype *DiseasetypeQuery
 	withFKs         bool
 	// intermediate query (i.e. traversal path).
@@ -78,8 +78,8 @@ func (dq *DiseaseQuery) QueryEmployee() *EmployeeQuery {
 	return query
 }
 
-// QueryServerity chains the current query on the serverity edge.
-func (dq *DiseaseQuery) QueryServerity() *SeverityQuery {
+// QuerySeverity chains the current query on the severity edge.
+func (dq *DiseaseQuery) QuerySeverity() *SeverityQuery {
 	query := &SeverityQuery{config: dq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := dq.prepareQuery(ctx); err != nil {
@@ -88,7 +88,7 @@ func (dq *DiseaseQuery) QueryServerity() *SeverityQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(disease.Table, disease.FieldID, dq.sqlQuery()),
 			sqlgraph.To(severity.Table, severity.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, disease.ServerityTable, disease.ServerityColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, disease.SeverityTable, disease.SeverityColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(dq.driver.Dialect(), step)
 		return fromU, nil
@@ -304,14 +304,14 @@ func (dq *DiseaseQuery) WithEmployee(opts ...func(*EmployeeQuery)) *DiseaseQuery
 	return dq
 }
 
-//  WithServerity tells the query-builder to eager-loads the nodes that are connected to
-// the "serverity" edge. The optional arguments used to configure the query builder of the edge.
-func (dq *DiseaseQuery) WithServerity(opts ...func(*SeverityQuery)) *DiseaseQuery {
+//  WithSeverity tells the query-builder to eager-loads the nodes that are connected to
+// the "severity" edge. The optional arguments used to configure the query builder of the edge.
+func (dq *DiseaseQuery) WithSeverity(opts ...func(*SeverityQuery)) *DiseaseQuery {
 	query := &SeverityQuery{config: dq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	dq.withServerity = query
+	dq.withSeverity = query
 	return dq
 }
 
@@ -395,11 +395,11 @@ func (dq *DiseaseQuery) sqlAll(ctx context.Context) ([]*Disease, error) {
 		_spec       = dq.querySpec()
 		loadedTypes = [3]bool{
 			dq.withEmployee != nil,
-			dq.withServerity != nil,
+			dq.withSeverity != nil,
 			dq.withDiseasetype != nil,
 		}
 	)
-	if dq.withEmployee != nil || dq.withServerity != nil || dq.withDiseasetype != nil {
+	if dq.withEmployee != nil || dq.withSeverity != nil || dq.withDiseasetype != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -454,7 +454,7 @@ func (dq *DiseaseQuery) sqlAll(ctx context.Context) ([]*Disease, error) {
 		}
 	}
 
-	if query := dq.withServerity; query != nil {
+	if query := dq.withSeverity; query != nil {
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Disease)
 		for i := range nodes {
@@ -474,7 +474,7 @@ func (dq *DiseaseQuery) sqlAll(ctx context.Context) ([]*Disease, error) {
 				return nil, fmt.Errorf(`unexpected foreign-key "severity_disease" returned %v`, n.ID)
 			}
 			for i := range nodes {
-				nodes[i].Edges.Serverity = n
+				nodes[i].Edges.Severity = n
 			}
 		}
 	}

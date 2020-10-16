@@ -16,8 +16,8 @@ const (
 
 	// EdgeEmployee holds the string denoting the employee edge name in mutations.
 	EdgeEmployee = "employee"
-	// EdgeServerity holds the string denoting the serverity edge name in mutations.
-	EdgeServerity = "serverity"
+	// EdgeSeverity holds the string denoting the severity edge name in mutations.
+	EdgeSeverity = "severity"
 	// EdgeDiseasetype holds the string denoting the diseasetype edge name in mutations.
 	EdgeDiseasetype = "diseasetype"
 
@@ -30,13 +30,13 @@ const (
 	EmployeeInverseTable = "employees"
 	// EmployeeColumn is the table column denoting the employee relation/edge.
 	EmployeeColumn = "employee_disease"
-	// ServerityTable is the table the holds the serverity relation/edge.
-	ServerityTable = "diseases"
-	// ServerityInverseTable is the table name for the Severity entity.
+	// SeverityTable is the table the holds the severity relation/edge.
+	SeverityTable = "diseases"
+	// SeverityInverseTable is the table name for the Severity entity.
 	// It exists in this package in order to avoid circular dependency with the "severity" package.
-	ServerityInverseTable = "severities"
-	// ServerityColumn is the table column denoting the serverity relation/edge.
-	ServerityColumn = "severity_disease"
+	SeverityInverseTable = "severities"
+	// SeverityColumn is the table column denoting the severity relation/edge.
+	SeverityColumn = "severity_disease"
 	// DiseasetypeTable is the table the holds the diseasetype relation/edge.
 	DiseasetypeTable = "diseases"
 	// DiseasetypeInverseTable is the table name for the Diseasetype entity.

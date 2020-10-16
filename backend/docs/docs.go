@@ -567,8 +567,8 @@ var doc = `{
                     "type": "object",
                     "$ref": "#/definitions/ent.Employee"
                 },
-                "serverity": {
-                    "description": "Serverity holds the value of the serverity edge.",
+                "severity": {
+                    "description": "Severity holds the value of the severity edge.",
                     "type": "object",
                     "$ref": "#/definitions/ent.Severity"
                 }

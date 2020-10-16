@@ -59,23 +59,23 @@ func (dc *DiseaseCreate) SetEmployee(e *Employee) *DiseaseCreate {
 	return dc.SetEmployeeID(e.ID)
 }
 
-// SetServerityID sets the serverity edge to Severity by id.
-func (dc *DiseaseCreate) SetServerityID(id int) *DiseaseCreate {
-	dc.mutation.SetServerityID(id)
+// SetSeverityID sets the severity edge to Severity by id.
+func (dc *DiseaseCreate) SetSeverityID(id int) *DiseaseCreate {
+	dc.mutation.SetSeverityID(id)
 	return dc
 }
 
-// SetNillableServerityID sets the serverity edge to Severity by id if the given value is not nil.
-func (dc *DiseaseCreate) SetNillableServerityID(id *int) *DiseaseCreate {
+// SetNillableSeverityID sets the severity edge to Severity by id if the given value is not nil.
+func (dc *DiseaseCreate) SetNillableSeverityID(id *int) *DiseaseCreate {
 	if id != nil {
-		dc = dc.SetServerityID(*id)
+		dc = dc.SetSeverityID(*id)
 	}
 	return dc
 }
 
-// SetServerity sets the serverity edge to Severity.
-func (dc *DiseaseCreate) SetServerity(s *Severity) *DiseaseCreate {
-	return dc.SetServerityID(s.ID)
+// SetSeverity sets the severity edge to Severity.
+func (dc *DiseaseCreate) SetSeverity(s *Severity) *DiseaseCreate {
+	return dc.SetSeverityID(s.ID)
 }
 
 // SetDiseasetypeID sets the diseasetype edge to Diseasetype by id.
@@ -216,12 +216,12 @@ func (dc *DiseaseCreate) createSpec() (*Disease, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := dc.mutation.ServerityIDs(); len(nodes) > 0 {
+	if nodes := dc.mutation.SeverityIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
-			Table:   disease.ServerityTable,
-			Columns: []string{disease.ServerityColumn},
+			Table:   disease.SeverityTable,
+			Columns: []string{disease.SeverityColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

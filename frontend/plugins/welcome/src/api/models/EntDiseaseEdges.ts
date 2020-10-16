@@ -51,7 +51,7 @@ export interface EntDiseaseEdges {
      * @type {EntSeverity}
      * @memberof EntDiseaseEdges
      */
-    serverity?: EntSeverity;
+    severity?: EntSeverity;
 }
 
 export function EntDiseaseEdgesFromJSON(json: any): EntDiseaseEdges {
@@ -66,7 +66,7 @@ export function EntDiseaseEdgesFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'diseasetype': !exists(json, 'diseasetype') ? undefined : EntDiseasetypeFromJSON(json['diseasetype']),
         'employee': !exists(json, 'employee') ? undefined : EntEmployeeFromJSON(json['employee']),
-        'serverity': !exists(json, 'serverity') ? undefined : EntSeverityFromJSON(json['serverity']),
+        'severity': !exists(json, 'severity') ? undefined : EntSeverityFromJSON(json['severity']),
     };
 }
 
@@ -81,7 +81,7 @@ export function EntDiseaseEdgesToJSON(value?: EntDiseaseEdges | null): any {
         
         'diseasetype': EntDiseasetypeToJSON(value.diseasetype),
         'employee': EntEmployeeToJSON(value.employee),
-        'serverity': EntSeverityToJSON(value.serverity),
+        'severity': EntSeverityToJSON(value.severity),
     };
 }
 
