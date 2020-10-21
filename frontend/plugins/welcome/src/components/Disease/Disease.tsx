@@ -107,17 +107,17 @@ const Disease: FC<{}> = () => {
   });
 
   const getEmployee = async () => {
-    const res = await api.listEmployee({ limit: 10, offset: 0 });
+    const res = await api.listEmployee({ limit: 2, offset: 0 });
     setEmployees(res);
   };
 
   const getDiseasetype = async () => {
-    const res = await api.listDiseasetype({ limit: 10, offset: 0 });
+    const res = await api.listDiseasetype({ limit: 3, offset: 0 });
     setDiseasetypes(res);
   };
 
   const getSeverity = async () => {
-    const res = await api.listSeverity({ limit: 10, offset: 0 });
+    const res = await api.listSeverity({ limit: 3, offset: 0 });
     setSeveritys(res);
   };
 
