@@ -50,7 +50,7 @@ var (
 	// DiseasetypesColumns holds the columns for the "diseasetypes" table.
 	DiseasetypesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString, Unique: true},
 	}
 	// DiseasetypesTable holds the schema information for the "diseasetypes" table.
 	DiseasetypesTable = &schema.Table{
@@ -62,7 +62,7 @@ var (
 	// EmployeesColumns holds the columns for the "employees" table.
 	EmployeesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "user_id", Type: field.TypeString},
+		{Name: "user_id", Type: field.TypeString, Unique: true},
 	}
 	// EmployeesTable holds the schema information for the "employees" table.
 	EmployeesTable = &schema.Table{
@@ -74,7 +74,7 @@ var (
 	// SeveritiesColumns holds the columns for the "severities" table.
 	SeveritiesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString, Unique: true},
 	}
 	// SeveritiesTable holds the schema information for the "severities" table.
 	SeveritiesTable = &schema.Table{

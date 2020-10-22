@@ -4,6 +4,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Link from '@material-ui/core/Link';
 import Swal from 'sweetalert2'; // alert Function
+
+import {
+  Content,
+} from '@backstage/core';
+
 import {
   AppBar,
   Toolbar,
@@ -185,11 +190,18 @@ const Disease: FC<{}> = () => {
       })
   }
 
-  //Java 
+  //logout
   function redirecLogOut() {
     //redirec Page ... http://localhost:3000/
     window.location.href = "http://localhost:3000/";
   }
+
+// go to Welcome 
+  function redirecTables() {
+    //redirec Page ... http://localhost:3000/Table
+    window.location.href = "http://localhost:3000/Table";
+  }
+
 
   return (
     <div className={classes.root}>
@@ -218,137 +230,151 @@ const Disease: FC<{}> = () => {
           </div>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="sm">
-
-        <Grid container spacing={3}>
-
-          <Grid item xs={10}>
-            <h2 style={{ textAlign: 'center' }}> เพิ่มข้อมูลโรคติดต่อ </h2>
-          </Grid>
-
-
-
-          <Grid item xs={12}>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel >รหัสพนักงาน</InputLabel>
-              <Select
-                name="employee"
-                value={disease.employee || ''}
-                onChange={handleChange}
-                label="รหัสพนักงาน"
-              >
-                {employees.map(item => {
-                  return (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.userId}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={10}>
-            <TextField
-              required={true}
-              error={!disease.name && showInputError}
-              id="name"
-              name="name"
-              type="string"
-              label="ชื่อโรค"
-              variant="outlined"
-              fullWidth
-              multiline
-              value={disease.name || ""}
-              onChange={handleChange}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel >ระดับความรุนแรง</InputLabel>
-              <Select
-                name="severity"
-                value={disease.severity || ''}
-                onChange={handleChange}
-                label="ระดับความรุนแรง"
-                fullWidth
-              >
-                {severitys.map(item => {
-                  return (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={10}>
-            <TextField
-              required={true}
-              error={!disease.symptom && showInputError}
-              name="symptom"
-              label="อาการ"
-              variant="outlined"
-              fullWidth
-              multiline
-              value={disease.symptom || ""}
-              onChange={handleChange}
-            />
-          </Grid>
-
-          <Grid item xs={10}>
-            <TextField
-              required={true}
-              error={!disease.contagion && showInputError}
-              name="contagion"
-              label="การแพร่กระจาย"
-              variant="outlined"
-              fullWidth
-              multiline
-              value={disease.contagion || ""}
-              onChange={handleChange}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel >ประเภทโรคติดต่อ</InputLabel>
-              <Select
-                name="diseasetype"
-                value={disease.diseasetype || ''}
-                onChange={handleChange}
-                label="ประเภทโรคติดต่อ"
-                fullWidth
-              >
-                {diseasetypes.map(item => {
-                  return (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={10}>
-            <Button
-              name="saveData"
-              size="large"
-              variant="contained"
-              color="primary"
-              disableElevation
-              className={classes.buttonSty}
-              onClick={save}
-            >
-              บันทึกข้อมูล
+      <Content>
+        <Button
+          name="redirecTable"
+          size="large"
+          variant="contained"
+          color="secondary"
+          disableElevation
+          style={{ float: 'right' }}
+          onClick={redirecTables}
+        >
+          แสดงข้อมูล
               </Button>
+
+        <Container maxWidth="sm">
+
+          <Grid container spacing={3}>
+
+            <Grid item xs={10}>
+              <h2 style={{ textAlign: 'center' }}> เพิ่มข้อมูลโรคติดต่อ </h2>
+            </Grid>
+
+
+
+            <Grid item xs={12}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel >รหัสพนักงาน</InputLabel>
+                <Select
+                  name="employee"
+                  value={disease.employee || ''}
+                  onChange={handleChange}
+                  label="รหัสพนักงาน"
+                >
+                  {employees.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.userId}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={10}>
+              <TextField
+                required={true}
+                error={!disease.name && showInputError}
+                id="name"
+                name="name"
+                type="string"
+                label="ชื่อโรค"
+                variant="outlined"
+                fullWidth
+                multiline
+                value={disease.name || ""}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel >ระดับความรุนแรง</InputLabel>
+                <Select
+                  name="severity"
+                  value={disease.severity || ''}
+                  onChange={handleChange}
+                  label="ระดับความรุนแรง"
+                  fullWidth
+                >
+                  {severitys.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={10}>
+              <TextField
+                required={true}
+                error={!disease.symptom && showInputError}
+                name="symptom"
+                label="อาการ"
+                variant="outlined"
+                fullWidth
+                multiline
+                value={disease.symptom || ""}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={10}>
+              <TextField
+                required={true}
+                error={!disease.contagion && showInputError}
+                name="contagion"
+                label="การแพร่กระจาย"
+                variant="outlined"
+                fullWidth
+                multiline
+                value={disease.contagion || ""}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel >ประเภทโรคติดต่อ</InputLabel>
+                <Select
+                  name="diseasetype"
+                  value={disease.diseasetype || ''}
+                  onChange={handleChange}
+                  label="ประเภทโรคติดต่อ"
+                  fullWidth
+                >
+                  {diseasetypes.map(item => {
+                    return (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={10} >
+              <Button
+                name="saveData"
+                size="large"
+                variant="contained"
+                color="primary"
+                disableElevation
+                className={classes.buttonSty}
+                onClick={save}
+              >
+                บันทึกข้อมูล
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </Content>
     </div>
   );
 };

@@ -17,7 +17,7 @@ type Employee struct {
 //Fields of the employee
 func (Employee) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("User_id"),
+		field.String("User_id").Unique(),
 
 	}
 }

@@ -210,6 +210,69 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Create disease
+  /diseases/{id}:
+    delete:
+      description: get disease by ID
+      operationId: delete-disease
+      parameters:
+      - description: Disease ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a disease entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update disease by ID
+      operationId: update-disease
+      parameters:
+      - description: Disease ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Disease entity
+        in: body
+        name: disease
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Disease'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Disease'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a disease entity by ID
   /diseasetypes:
     get:
       description: list diseasetype entities
@@ -270,6 +333,35 @@ paths:
             $ref: '#/definitions/gin.H'
       summary: Create diseasetype
   /diseasetypes/{id}:
+    delete:
+      description: get diseasetype by ID
+      operationId: delete-diseasetype
+      parameters:
+      - description: Diseasetype ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a diseasetype entity by ID
     get:
       description: get diseasetype by ID
       operationId: get-diseasetype
@@ -299,6 +391,39 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a diseasetype entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update diseasetype by ID
+      operationId: update-diseasetype
+      parameters:
+      - description: Diseasetype ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Diseasetype entity
+        in: body
+        name: diseasetype
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Diseasetype'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Diseasetype'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a diseasetype entity by ID
   /employees:
     get:
       description: list employee entities
@@ -331,6 +456,35 @@ paths:
             $ref: '#/definitions/gin.H'
       summary: List employee entities
   /employees/{id}:
+    delete:
+      description: get employee by ID
+      operationId: delete-employee
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a employee entity by ID
     get:
       description: get employee by ID
       operationId: get-employee
@@ -360,6 +514,39 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a employee entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update employee by ID
+      operationId: update-employee
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Employee entity
+        in: body
+        name: employee
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Employee'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a employee entity by ID
   /severitys:
     get:
       description: list severity entities
@@ -420,6 +607,35 @@ paths:
             $ref: '#/definitions/gin.H'
       summary: Create severity
   /severitys/{id}:
+    delete:
+      description: get severity by ID
+      operationId: delete-severity
+      parameters:
+      - description: Severity ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a severity entity by ID
     get:
       description: get severity by ID
       operationId: get-severity
@@ -449,6 +665,39 @@ paths:
           schema:
             $ref: '#/definitions/gin.H'
       summary: Get a severity entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update severity by ID
+      operationId: update-severity
+      parameters:
+      - description: Severity ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Severity entity
+        in: body
+        name: severity
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Severity'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Severity'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a severity entity by ID
 securityDefinitions:
   ApiKeyAuth:
     in: header

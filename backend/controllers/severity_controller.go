@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"context"
 	"strconv"
 
@@ -130,6 +131,83 @@ func (ctl *SeverityController) ListSeverity(c *gin.Context) {
 	c.JSON(200, severitys)
 }
 
+// DeleteSeverity handles DELETE requests to delete a severity entity
+// @Summary Delete a severity entity by ID
+// @Description get severity by ID
+// @ID delete-severity
+// @Produce  json
+// @Param id path int true "Severity ID"
+// @Success 200 {object} gin.H
+// @Failure 400 {object} gin.H
+// @Failure 404 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /severitys/{id} [delete]
+func (ctl *SeverityController) DeleteSeverity(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	err = ctl.client.Severity.
+		DeleteOneID(int(id)).
+		Exec(context.Background())
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{"result": fmt.Sprintf("ok deleted %v", id)})
+}
+
+// UpdateSeverity handles PUT requests to update a severity entity
+// @Summary Update a severity entity by ID
+// @Description update severity by ID
+// @ID update-severity
+// @Accept   json
+// @Produce  json
+// @Param id path int true "Severity ID"
+// @Param severity body ent.Severity true "Severity entity"
+// @Success 200 {object} ent.Severity
+// @Failure 400 {object} gin.H
+// @Failure 500 {object} gin.H
+// @Router /severitys/{id} [put]
+func (ctl *SeverityController) UpdateSeverity(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	obj := ent.Severity{}
+	if err := c.ShouldBind(&obj); err != nil {
+		c.JSON(400, gin.H{
+			"error": "severity binding failed",
+		})
+		return
+	}
+	obj.ID = int(id)
+	fmt.Println(obj.ID)
+	u, err := ctl.client.Severity.
+		UpdateOneID(int(id)).
+		SetName(obj.Name).
+		Save(context.Background())
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "update failed",
+		})
+		return
+	}
+
+	c.JSON(200, u)
+}
+
 // NewSeverityController creates and registers handles for the severity controller
 func NewSeverityController(router gin.IRouter, client *ent.Client) *SeverityController {
 	sc := &SeverityController{
@@ -144,6 +222,9 @@ func (ctl *SeverityController) register() {
 	severitys := ctl.router.Group("/severitys")
 
 	severitys.GET("", ctl.ListSeverity)
+
 	severitys.POST("", ctl.CreateSeverity)
 	severitys.GET(":id", ctl.GetSeverity)
+	severitys.PUT(":id", ctl.UpdateSeverity)
+	severitys.DELETE(":id", ctl.DeleteSeverity)
 }

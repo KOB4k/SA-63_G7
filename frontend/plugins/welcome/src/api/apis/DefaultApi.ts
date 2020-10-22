@@ -45,6 +45,22 @@ export interface CreateSeverityRequest {
     severity: EntSeverity;
 }
 
+export interface DeleteDiseaseRequest {
+    id: number;
+}
+
+export interface DeleteDiseasetypeRequest {
+    id: number;
+}
+
+export interface DeleteEmployeeRequest {
+    id: number;
+}
+
+export interface DeleteSeverityRequest {
+    id: number;
+}
+
 export interface GetDiseasetypeRequest {
     id: number;
 }
@@ -75,6 +91,26 @@ export interface ListEmployeeRequest {
 export interface ListSeverityRequest {
     limit?: number;
     offset?: number;
+}
+
+export interface UpdateDiseaseRequest {
+    id: number;
+    disease: EntDisease;
+}
+
+export interface UpdateDiseasetypeRequest {
+    id: number;
+    diseasetype: EntDiseasetype;
+}
+
+export interface UpdateEmployeeRequest {
+    id: number;
+    employee: EntEmployee;
+}
+
+export interface UpdateSeverityRequest {
+    id: number;
+    severity: EntSeverity;
 }
 
 /**
@@ -219,6 +255,134 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async createSeverity(requestParameters: CreateSeverityRequest): Promise<EntSeverity> {
         const response = await this.createSeverityRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get disease by ID
+     * Delete a disease entity by ID
+     */
+    async deleteDiseaseRaw(requestParameters: DeleteDiseaseRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteDisease.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/diseases/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * get disease by ID
+     * Delete a disease entity by ID
+     */
+    async deleteDisease(requestParameters: DeleteDiseaseRequest): Promise<object> {
+        const response = await this.deleteDiseaseRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get diseasetype by ID
+     * Delete a diseasetype entity by ID
+     */
+    async deleteDiseasetypeRaw(requestParameters: DeleteDiseasetypeRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteDiseasetype.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/diseasetypes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * get diseasetype by ID
+     * Delete a diseasetype entity by ID
+     */
+    async deleteDiseasetype(requestParameters: DeleteDiseasetypeRequest): Promise<object> {
+        const response = await this.deleteDiseasetypeRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get employee by ID
+     * Delete a employee entity by ID
+     */
+    async deleteEmployeeRaw(requestParameters: DeleteEmployeeRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteEmployee.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/employees/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * get employee by ID
+     * Delete a employee entity by ID
+     */
+    async deleteEmployee(requestParameters: DeleteEmployeeRequest): Promise<object> {
+        const response = await this.deleteEmployeeRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * get severity by ID
+     * Delete a severity entity by ID
+     */
+    async deleteSeverityRaw(requestParameters: DeleteSeverityRequest): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteSeverity.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/severitys/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * get severity by ID
+     * Delete a severity entity by ID
+     */
+    async deleteSeverity(requestParameters: DeleteSeverityRequest): Promise<object> {
+        const response = await this.deleteSeverityRaw(requestParameters);
         return await response.value();
     }
 
@@ -459,6 +623,162 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async listSeverity(requestParameters: ListSeverityRequest): Promise<Array<EntSeverity>> {
         const response = await this.listSeverityRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * update disease by ID
+     * Update a disease entity by ID
+     */
+    async updateDiseaseRaw(requestParameters: UpdateDiseaseRequest): Promise<runtime.ApiResponse<EntDisease>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateDisease.');
+        }
+
+        if (requestParameters.disease === null || requestParameters.disease === undefined) {
+            throw new runtime.RequiredError('disease','Required parameter requestParameters.disease was null or undefined when calling updateDisease.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/diseases/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: EntDiseaseToJSON(requestParameters.disease),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntDiseaseFromJSON(jsonValue));
+    }
+
+    /**
+     * update disease by ID
+     * Update a disease entity by ID
+     */
+    async updateDisease(requestParameters: UpdateDiseaseRequest): Promise<EntDisease> {
+        const response = await this.updateDiseaseRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * update diseasetype by ID
+     * Update a diseasetype entity by ID
+     */
+    async updateDiseasetypeRaw(requestParameters: UpdateDiseasetypeRequest): Promise<runtime.ApiResponse<EntDiseasetype>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateDiseasetype.');
+        }
+
+        if (requestParameters.diseasetype === null || requestParameters.diseasetype === undefined) {
+            throw new runtime.RequiredError('diseasetype','Required parameter requestParameters.diseasetype was null or undefined when calling updateDiseasetype.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/diseasetypes/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: EntDiseasetypeToJSON(requestParameters.diseasetype),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntDiseasetypeFromJSON(jsonValue));
+    }
+
+    /**
+     * update diseasetype by ID
+     * Update a diseasetype entity by ID
+     */
+    async updateDiseasetype(requestParameters: UpdateDiseasetypeRequest): Promise<EntDiseasetype> {
+        const response = await this.updateDiseasetypeRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * update employee by ID
+     * Update a employee entity by ID
+     */
+    async updateEmployeeRaw(requestParameters: UpdateEmployeeRequest): Promise<runtime.ApiResponse<EntEmployee>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateEmployee.');
+        }
+
+        if (requestParameters.employee === null || requestParameters.employee === undefined) {
+            throw new runtime.RequiredError('employee','Required parameter requestParameters.employee was null or undefined when calling updateEmployee.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/employees/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: EntEmployeeToJSON(requestParameters.employee),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntEmployeeFromJSON(jsonValue));
+    }
+
+    /**
+     * update employee by ID
+     * Update a employee entity by ID
+     */
+    async updateEmployee(requestParameters: UpdateEmployeeRequest): Promise<EntEmployee> {
+        const response = await this.updateEmployeeRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * update severity by ID
+     * Update a severity entity by ID
+     */
+    async updateSeverityRaw(requestParameters: UpdateSeverityRequest): Promise<runtime.ApiResponse<EntSeverity>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateSeverity.');
+        }
+
+        if (requestParameters.severity === null || requestParameters.severity === undefined) {
+            throw new runtime.RequiredError('severity','Required parameter requestParameters.severity was null or undefined when calling updateSeverity.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/severitys/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: EntSeverityToJSON(requestParameters.severity),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EntSeverityFromJSON(jsonValue));
+    }
+
+    /**
+     * update severity by ID
+     * Update a severity entity by ID
+     */
+    async updateSeverity(requestParameters: UpdateSeverityRequest): Promise<EntSeverity> {
+        const response = await this.updateSeverityRaw(requestParameters);
         return await response.value();
     }
 
